@@ -1,16 +1,46 @@
 html,
 body {
+  width: 100%;
+  height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, InkLipquid, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, NanumGothic-Bold, NanumGothic-ExtraBold,
+    NanumGothic-Regular;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
+a:hover {
+  text-decoration: underline;
+}
 
 * {
   box-sizing: border-box;
+  outline: none;
+}
+
+/* @font-face {
+  font-family: 'InkLipquid';
+  src: url('../src/font/InkLipquidFonts.ttf');
+} */
+
+/* @font-face {
+    font-family: 'digital';
+    src: url('../src/font/DS-DIGIB.TTF');
+  } */
+@font-face {
+  font-family: 'NanumGothic-Bold';
+  src: url('../src/font/NanumGothic-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'NanumGothic-ExtraBold';
+  src: url('../src/font/NanumGothic-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: 'NanumGothic-Regular';
+  src: url('../src/font/NanumGothic-Regular.ttf');
 }
