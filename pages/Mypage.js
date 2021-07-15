@@ -54,7 +54,7 @@ const LinkDiv = styled(Link)`
 
 const MyPage = () => {
 
-  const accessToken = Cookies.get('accessToken');
+  const accessToken = window.Cookies.get('accessToken');
   if (accessToken) {
     router.push('/');
   }
