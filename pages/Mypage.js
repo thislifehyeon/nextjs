@@ -60,7 +60,7 @@ const MyPage = () => {
   }
 
   const [img, setImg] = useState('');
-  const [userInfo, setuser] = useState({});
+  const [userInfo, setuser] = useState(null);
 
   const [username, setUsername] = useState('');
   const [gender, setGender] = useState('');
