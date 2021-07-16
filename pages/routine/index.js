@@ -57,17 +57,16 @@ function Routine() {
   console.log(routines);
 
   useEffect(() => {
-    getRoutine(userId);
+    getRoutine();
   }, []);
 
-  const getRoutine = async (userId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-    const url2 = `${process.env.NEXT_PUBLIC_url}/user`;
+  const getRoutine = async () => {
+    console.log("실행");
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`
+    // const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
     const res = await axios.get(url, { withCredentials: true });
-    const res2 = await axios.get(url2, { withCredentials: true });
     dispatch(currentRoutine(res.data));
-    // setRoutines(res.data.result)
-    console.log(res2);
+    console.log(res);
   };
 
   const addRoutine = async (userId) => {
@@ -119,7 +118,7 @@ const getMyRoutine = async(e) => {
     {routines &&
       routines.map((routine) => (
         <>
-        <Link href={`/routine/${routine.id}`}>
+        <Link href={`/routine/${routine.id}`} key={routine.id}>
          <a>
            <RoutineContainer
             id={routine.id}

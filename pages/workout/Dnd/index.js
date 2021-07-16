@@ -106,8 +106,10 @@ const ItemMemo = styled.li`
   list-style: none;
 `;
 
-const UpdateButton = styled.span`
-  margin: 10px 0;
+const UpdateButton = styled.a`
+  /* margin-right: 10px; */
+  box-sizing: border-box;
+  max-height: 18px;
   padding: 0 10px;
   cursor: pointer;
   font-family: NanumGothic-Bold;
@@ -194,11 +196,16 @@ const getListStyle = isDraggingOver => ({
   };
 
   const workoutUpdateHandler = (e) =>{
-    console.log(e);
-    const id = e.target.parentElement.parentElement.id
-    console.log(id);
-    setModalOpen(!modalOpen)
-    dispatch(workoutInfo(id))
+    if (!e.target.tagName === 'svg') {
+      console.log('svg입니다');
+
+    } else {
+      console.log('svg가 아닙니다')
+    }
+    const id = e.target.parentElement.parentElement.parentElement.id
+    console.log(e.target)
+    // setModalOpen(!modalOpen)
+    // dispatch(workoutInfo(id))
     // if(isOpen) {
     // }
   }
@@ -297,18 +304,19 @@ const getListStyle = isDraggingOver => ({
                           <div>
                             <ItemName>{item.name}</ItemName>
                             <ButtonContainer>
-                              <UpdateButton 
-                                id={item.id} 
-                                name={item.name}
-                                onClick={(e)=> {workoutUpdateHandler(e)}}
-                                >
-                                <FontAwesomeIcon icon={faEdit} />
+                              <UpdateButton id={item.id}>
+                                <FontAwesomeIcon icon={faEdit} 
+                                  id={item.id} 
+                                  name={item.name}
+                                  onClick={(e)=> {workoutUpdateHandler(e)}}
+                                />
                               </UpdateButton>
-                              <UpdateButton
-                                id={item.id} 
-                                onClick={(e)=> {workoutDeleteHandler(e, routineId)}}
-                                >
-                                <FontAwesomeIcon icon={faTrashAlt} />
+                              {/* // 삭제버튼 */}
+                              <UpdateButton>
+                                <FontAwesomeIcon icon={faTrashAlt}
+                                  id={item.id} 
+                                  onClick={(e)=> {workoutDeleteHandler(e, routineId)}}
+                                ></FontAwesomeIcon>
                               </UpdateButton>
                             </ButtonContainer>
                           </div>

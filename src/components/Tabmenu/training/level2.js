@@ -72,7 +72,7 @@ function List2({getRoutine}) {
     // console.log(res.data.result);
     const items = res.data.result;
     const curWorkout = items.filter((item) => (
-      item.category === '유산소운동'
+      item.category === '유산소운동'&& item.default === true
     ))
     // console.log(curWorkout);
     setData(curWorkout)

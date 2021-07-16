@@ -10,9 +10,9 @@ import axios from 'axios'
 function Modal({setModalOpen, modalOpen, id, name}) {
   // console.log("id: ",id, "name: ", name);
   const routineId = useSelector((state) => state.routineInfo.id)
+  const workoutId = useSelector((state) => state.workoutInfo.id)
   const dispatch = useDispatch();
   // const routineId = 11;
-  const workoutId = useSelector((state) => state.workoutInfo.id)
   console.log(workoutId);
   console.log(routineId);
   const [values, setValues] = useState({ name: '', set_number: '', minutes: '', seconds: '', rest_minutes: '', rest_seconds: '', memo: '' });
@@ -24,10 +24,8 @@ function Modal({setModalOpen, modalOpen, id, name}) {
   };
   console.log(values);
   
-
-
   const updateWorkoutInfo = async(workoutId, values) => {
-    console.log("요청");
+    console.log("요청", workoutId);
     const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
     const body = {
       workoutid : workoutId,
@@ -37,9 +35,12 @@ function Modal({setModalOpen, modalOpen, id, name}) {
       rest_time: (values.rest_minutes * 6) + (values.rest_seconds),
       memo: values.memo
     }
+    console.log(body);
     const res = await axios.patch(url, body, {withCredentials: true})
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     console.log(res);
-    getMyRoutine(routineId)
+    setModalOpen(false)
+    // getMyRoutine(routineId)
   }
 
   const getMyRoutine = async(routineId) => {
@@ -50,6 +51,7 @@ function Modal({setModalOpen, modalOpen, id, name}) {
   }
 
   useEffect(() => {
+    setModalOpen(false)
     getMyRoutine(routineId)
   }, [])
 
@@ -65,8 +67,11 @@ function Modal({setModalOpen, modalOpen, id, name}) {
         <input name="rest_seconds" type="number" placeholder="휴식시간(초)" onChange={(e)=>{inputHandler(e)}}/>
         <input name="memo" placeholder="메모" onChange={(e)=>{inputHandler(e)}}/>
       <ModalSaveBtn 
-      onClick={()=>{updateWorkoutInfo(workoutId, values)}}
-      onClick={()=>{setModalOpen(!modalOpen)}}
+      onClick={async()=>{
+        await updateWorkoutInfo(workoutId, values)
+        await getMyRoutine(routineId)
+      }}
+      // onClick={()=>{setModalOpen(!modalOpen)}}
       >
         저장</ModalSaveBtn>
     </ModalSection>
@@ -79,6 +84,7 @@ export default Modal;
 export const ModalContainer = styled.section`
   height: 40vh;
   width: 20vw;
+  top: 0;
   display: flex;
   justify-content: center;
   padding:50%;
@@ -95,14 +101,16 @@ export const ModalSection = styled.section`
   border-radius: 10px;
   margin: 10% 30%;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
-  position: absolute;
+  /* position: absolute; */
+  position: fixed;
+
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   z-index: 999;
   opacity: ${(props) => (props.modalOpen ? "100%" : "0")};
-  top: ${(props) => (props.modalOpen ? "0" : "-100%")};
+  top: ${(props) => (props.modalOpen ? "0" : "-1500%")};
   height:500px;
   /* right: 100px;
   top: 50px; */

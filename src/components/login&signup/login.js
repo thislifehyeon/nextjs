@@ -66,7 +66,7 @@ export default function login({ modalLogin, setModalLogin }) {
             <span>아이디</span>
             <LoginInput name='email' onChange={(e) => inputHandler(e)} />
             <span>비밀번호</span>
-            <LoginInput name='password' onChange={(e) => inputHandler(e)} />
+            <LoginInput name='password' input type='password' onChange={(e) => inputHandler(e)} />
           </form>
 
           <div className='login_button'>
@@ -93,6 +93,7 @@ const LoginContainer = styled.div`
   align-items: center;
   flex-direction: column;
   padding-top: 200px;
+  margin-top: 100px;
   z-index: 103;
   .login_form {
     position: absolute;

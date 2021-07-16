@@ -110,17 +110,13 @@ export default function Main() {
   const routineId = useSelector((state) => state.routineInfo.id)
   const [workouts, setWorkouts] = useState(null);
   const dispatch = useDispatch();
-  const userId = 5;
-  console.log(userId);
+  // const userId = 5;
+  // console.log(userId);
   console.log(routines);
   console.log(routineId)
 
   useEffect(() => {
-    // if(!routineId){
-    //   location.replace(`/routine`)
-    // } else {
-      getMyRoutine(routineId)
-    // }
+    getMyRoutine(routineId)
   }, [])
 
   const getMyRoutine = async(routineId) => {

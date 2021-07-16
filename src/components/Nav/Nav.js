@@ -28,11 +28,11 @@ export default function Nav() {
         <ButtonContainer>
           {accessToken ? (
             <>
-            <Link href='/routine'>
-              <div className='link main'>메인페이지</div>
-            </Link>
             <Link href='/Mypage'>
               <div className='link mypage'>마이페이지</div>
+            </Link>
+            <Link href='/routine'>
+              <div className='link main'>메인페이지</div>
             </Link>
             </>
           ) : (

@@ -68,7 +68,7 @@ function List3({getRoutine}) {
     console.log(res.data.result);
     const items = res.data.result;
     const curWorkout = items.filter((item) => (
-      item.category === '휴식'
+      item.category === '휴식' && item.default === true
     ))
     console.log(curWorkout);
     setData(curWorkout)

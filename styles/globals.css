@@ -6,7 +6,7 @@ body {
   margin: 0;
   font-family: -apple-system, InkLipquid, BlinkMacSystemFont, Segoe UI, 
   Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, 
-  NanumGothic-Bold, NanumGothic-ExtraBold, NanumGothic-Regular, OpenSans;
+  NanumGothic-Bold, DoHyeon-Regular, NanumGothic-ExtraBold, NanumGothic-Regular, OpenSans;
 }
 
 a {
@@ -21,17 +21,18 @@ a:hover {
   box-sizing: border-box;
   outline: none;
 }
-
-/* @font-face {
+/* 
+@font-face {
   font-family: 'InkLipquid';
   src: url('../src/font/InkLipquidFonts.ttf');
 } */
-
-/* @font-face {
+/* 
+@font-face {
     font-family: 'digital';
     src: url('../src/font/DS-DIGIB.TTF');
   } */
-@font-face {
+
+/* @font-face {
   font-family: 'NanumGothic-Bold';
   src: url('../src/font/NanumGothic-Bold.ttf');
 }
@@ -55,8 +56,12 @@ a:hover {
   font-family: 'OpenSans-ExtraBold';
   src: url('../src/font/OpenSans-ExtraBold.ttf');
 }
-
 @font-face {
   font-family: 'OpenSans-Bold';
   src: url('../src/font/OpenSans-Bold.ttf');
+} */
+
+@font-face {
+  font-family: 'DoHyeon-Regular';
+  src: url('../src/font/DoHyeon-Regular.ttf');
 }

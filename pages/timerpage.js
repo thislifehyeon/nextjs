@@ -14,16 +14,16 @@ export default function timerpage({ data }) {
     { id: '3', name: '데드리프트', set_number: 2, set_time: 1, rest_time: 1 },
   ];
 
-  // const totalTime = (taskIds) => {
-  //   //분단위로 운동시간 총합 뽑아내기
-  //   const total = taskIds.reduce((acc, el) => {
-  //     return acc + (el.set_time * el.set_number + el.set_time * el.rest_time);
-  //   }, 0);
-  //   const hour = parseInt(total / 60);
-  //   const min = total % 60;
-  //   dispatch(timerSet(0, min, hour));
-  //   dispatch(timerReset(0, min, hour));
-  // };
+  const totalTime = (taskIds) => {
+    //분단위로 운동시간 총합 뽑아내기
+    const total = taskIds.reduce((acc, el) => {
+      return acc + (el.set_time * el.set_number + el.set_time * el.rest_time);
+    }, 0);
+    const hour = parseInt(total / 60);
+    const min = total % 60;
+    dispatch(timerSet(0, min, hour));
+    dispatch(timerReset(0, min, hour));
+  };
 
   const finishedTotalTime = (taskIds, cur) => {
     //운동시간 끝내면 세트마다 운동한 시간 축적시키기
