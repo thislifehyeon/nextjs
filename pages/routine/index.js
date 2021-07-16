@@ -6,6 +6,7 @@ import axios from 'axios'
 import { currentRoutine } from '../../redux/reducers/routine';
 import {useRouter} from 'next/router'
 import Link from 'next/link'
+import {routineInfo} from '../../redux/reducers/routineInfo'
 
 const RoutineSection = styled.section`
   display: flex;
