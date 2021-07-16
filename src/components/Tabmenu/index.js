@@ -20,7 +20,8 @@ const Button = styled.ul`
   justify-content: center;
   flex-direction: column;
   padding-left: 0;
-  margin: 0 15px;
+  margin-top: 30px;
+  margin-left: 20px;
   width: 150px;
   text-align: center;
   align-items: stretch;
@@ -45,27 +46,12 @@ const List = styled.li`
 
 
 const First = styled.div`
-  padding: 0 5px;
-  width: 200px;
-  height: 500px;
-  /* overflow-y: auto; */
-  margin: 0 15px;
-
 `;
+
 const Second = styled.div`
-  padding: 0 5px;
-  width: 200px;
-  height: 500px;
-  /* overflow-y: auto; */
-  margin: 0 15px;
 `;
 
 const Third = styled.div`
-  padding: 0 5px;
-  width: 200px;
-  height: 500px;
-  /* overflow-y: auto; */
-  margin: 0 15px;
 `;
 
 function Tabmenu() {

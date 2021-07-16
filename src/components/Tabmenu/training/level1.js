@@ -8,28 +8,35 @@ import {routineInfo} from '../../../../redux/reducers/routineInfo'
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 700px;
+
+  @media ( max-width: 768px ) {
+    display:none;
+  }
 `;
 
 const ItemContainer = styled.ul`
-  background: #2ac1bc;
-  color: #f7ffff;
+  background-color: #fce8f8;
+  color: grey;
   display: flex;
-  text-align: center;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-family: NanumGothic-regular;
   font-weight: 300;
-  width: 130px;
-  margin: 10px;
-  padding: 10px;
+  margin-bottom: 5px;
+  width: 100px;
+  height: 50px;
+  min-width: 95%;
+  padding: 0 10px;
   border-radius: 8px;
-  box-shadow: 4px 3px 2px 1px rgba(0, 0, 255, 0.2);
+  box-shadow: 4px 3px 2px 1px #fce8f8;
+  
+  @media ( max-width: 768px ) {
+    display:none;
+  }
 
   &:hover {
-    background-color: #f7ffff;
-    color: #2ac1bc;
+    color: #000035;
   }
 `;
 
@@ -44,13 +51,14 @@ const ItemList = styled.li`
 `;
 
 const AddButton = styled.div`
-  border-radius: 10px;
-  border: 1px solid;
+  border-radius: 20%;
+  font-size: 1.4rem;
   color: gray;
-  font-size: 1.3rem;
+  margin-right: 10px;
+  margin: 0;
 
   :hover {
-    background-color: rgba(0, 0, 255, .2);
+    color: #000035;
   }
 `;
 

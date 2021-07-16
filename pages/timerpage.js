@@ -156,7 +156,7 @@ export default function timerpage({ data }) {
       <Body>
         <Info>
           <div>{isResting ? '휴식 시간' : taskIds[cur].name}</div>
-          <div>{data ? data.name : ""}</div>
+          {/* <div>{data ? data.name : ""}</div> */}
           <div>{taskIds ? `${set} / ${taskIds[cur].set_number} 세트` : null}</div>
         </Info>
 
@@ -195,19 +195,30 @@ export const getInitialProps = async (ctx) => {
 
 let Body = styled.div`
   display: flex;
-  width: 100vw;
+  width: 90%;
   height: 70vh;
   padding: 50px;
   flex-direction: column;
-  /* border: 3px solid green; */
-  justify-content: space-around;
-  /* flex-wrap: wrap; */
-  border: 5px outset #000035;
-  @media ( max-width: 1024px ) {
-    max-width: 500px;
-    height: 80vh;
+  justify-content: space-between;
+  background-color: #fff8fd;
+  color: #3e3e3e;
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+
+  @media ( max-width: 1280px ) {
+    max-width: 100%;
+    height: 80%;
+    margin-top: 15px;
+    padding: 30px;
   }
 
+  @media ( max-width: 768px ) {
+    max-width: 100%;
+    height: 80%;
+    margin-top: 15px;
+    padding: 30px;
+  }
 `;
 
 let Info = styled.div`
@@ -215,29 +226,54 @@ let Info = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 40px 0px 0px 0px;
-  font-size: 2.4rem;
+  font-size: 2.0rem;
   font-weight: bold;
   > div {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    font-size: 2.2rem;
+    min-width: 45%;
     height: 100%;
+
+    @media ( max-width: 1280px ) {
+    width: 70%;
+    font-size: 1.5rem;
+    justify-content: space-around;
+    }
+  }
+
+  @media ( max-width: 768px ) {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
   }
   /* border: 3px solid blue; */
 `;
 
 let Time = styled.div`
   font-family: 'digital';
+  background-color: #ffffff;
   align-self: center;
   width: 100%;
-  font-size: 14em;
+  border: 1px solid black;
+  border-radius: 20px;
+  font-family: OpenSans-Bold;
+  /* margin: 30px 0; */
+  font-size: 8em;
   text-align: center;
-  @media ( max-width: 1024px ) {
-    max-width: 500px;
-    font-size: 10rem;
+
+  @media ( max-width: 1280px ) {
+    /* max-width: 80%; */
+    width: 100%;
+    font-size: 6rem;
   }
-  /* border: 3px solid red; */
+
+  @media ( max-width: 768px ) {
+    /* max-width: 80%; */
+    width: 100%;
+    font-size: 6rem;
+  }
 `;
 
 let ButtonContainer = styled.div`

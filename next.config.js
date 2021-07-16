@@ -2,11 +2,11 @@ module.exports = {
   reactStrictMode: true,
   images: {
     domains: [
-      'https://png.pngtree.com',
+      'https://png.pngtree.com/png-vector/20191004/ourlarge/pngtree-person-icon-png-image_1788612.jpg',
     ],
   },
   env: {
-    url: 'http://ec2-54-180-138-156.ap-northeast-2.compute.amazonaws.com',
+    url: 'http://localhost:8000',
   },
 };
 

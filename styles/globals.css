@@ -4,8 +4,9 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, InkLipquid, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, NanumGothic-Bold, NanumGothic-ExtraBold,
-    NanumGothic-Regular;
+  font-family: -apple-system, InkLipquid, BlinkMacSystemFont, Segoe UI, 
+  Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, 
+  NanumGothic-Bold, NanumGothic-ExtraBold, NanumGothic-Regular, OpenSans;
 }
 
 a {
@@ -43,4 +44,19 @@ a:hover {
 @font-face {
   font-family: 'NanumGothic-Regular';
   src: url('../src/font/NanumGothic-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans-Regular';
+  src: url('../src/font/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans-ExtraBold';
+  src: url('../src/font/OpenSans-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans-Bold';
+  src: url('../src/font/OpenSans-Bold.ttf');
 }

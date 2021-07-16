@@ -15,56 +15,59 @@ import {routineInfo} from '../../../redux/reducers/routineInfo'
 import WorkoutItem from '../../../src/components/WorkoutItem.js'
 resetServerContext();
 
-const grid = 8;
-
 const DndContainer = styled.div`
   margin-top: 5vh;
   display: flex;
   flex-direction: column;
-  width: 20vw;
-  height: 80vh;
   align-items: center;
-  
-  /* border : 1px solid black; */
-  
+  height: 100%;
+
   div{
     margin-left: 0;
     text-align : center;
   }
+  @media (max-width: 1280px) {
+    overflow-y: auto;
+  }
 `;
 
 const ItemContainer = styled.div`
-  display: flex;
+  display: flex; 
   flex-direction: column;
-  min-width: 300px;
-  margin-left: 20px;
-  padding: ${grid};
   border-radius: 6px;
+  width: 450px;
   background-color: ${(props) => (props.isDraggingOver ? 'lightblue' : '#4665d9')};
   background-color: ${(props) => (props.editMode ? '#000' : 'white')};
   border: ${(props) => (props.editMode ? '1px solid #000' : 'none')};
   opacity: ${(props) => (props.editMode ? '0.55' : '1')};
+
+  @media (max-width: 1280px) {
+    max-width: 360px;
+    min-width: 280px;
+  }
 `;
 
 const Item = styled.ul`
-  border-radius: 5px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0.8;
   user-select: none;
   margin: 5px 5px;
   font-family: Stylish-Regular;
-  color: lightgrey;
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  -webkit-backdrop-filter: blur( 12.0px );
-  background: ${(props) => (props.isDragging ? '#2ac1bc' : '#4665d9;')};
-  
+  background: #fff8fd;
+  color: #000036;
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.22 );
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+
   :hover{
-    background: #ffffff;
-    color: #000036;
-    /* border: 2px solid #000036; */  
+    color: lightgrey;
+    background: ${(props) => (props.isDragging ? '#2ac1bc' : '#000035;')};
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.8 );
+    -webkit-backdrop-filter: blur( 22.0px );
+    backdrop-filter: blur(22px);
   }
 
   div {
@@ -119,7 +122,7 @@ const RotateButton = styled.div`
   padding: 10px;
   /* border: 2px outset lightgreen; */
   border-radius: 10px;
-  height: 100px;
+  height: 40px;
   width: 80%;
   
   :hover {

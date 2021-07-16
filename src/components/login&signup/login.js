@@ -19,7 +19,7 @@ export default function login({ modalLogin, setModalLogin }) {
     if (email && password) {
       axios
         .post(
-          `http://ec2-54-180-138-156.ap-northeast-2.compute.amazonaws.com/login`,
+          `${process.env.NEXT_PUBLIC_url}/login`,
           {
             email: email,
             password: password,
@@ -28,7 +28,7 @@ export default function login({ modalLogin, setModalLogin }) {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res.data, '님 로그인성공');
+          console.log(res.data.data, '님 로그인성공');
           if (modalLogin) {
             setModalLogin(false);
           }
@@ -40,7 +40,7 @@ export default function login({ modalLogin, setModalLogin }) {
 
   const handlegoogleLogin = (result) => {
     axios
-      .post(`http://ec2-54-180-138-156.ap-northeast-2.compute.amazonaws.com/login`, {
+      .post(`${process.env.NEXT_PUBLIC_url}/login`, {
         email: result.profileObj.email,
         username: result.profileObj.name,
         social: 'google',
