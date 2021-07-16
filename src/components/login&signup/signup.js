@@ -86,7 +86,7 @@ const SignUpContainer = styled.div`
     justify-content: center;
     z-index: 100;
     > span {
-      padding-top : 30px;
+      padding-top: 30px;
       font-size: 1.5rem;
     }
     div:nth-child(5) {

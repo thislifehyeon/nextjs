@@ -1,14 +1,12 @@
 import styled from 'styled-components';
-import RoutineLists from './RoutineLists';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { currentRoutine } from '../../redux/reducers/routine';
 import { useDispatch, useSelector } from 'react-redux';
-import TodayRoutine from '../workout/Dnd';
-import Tabmenu from '../../src/components/Tabmenu'
-import Timer from '../timerpage'
-import {routineInfo} from '../../redux/reducers/routineInfo'
-
+import TodayRoutine from '../workout';
+import Tabmenu from '../../src/components/Tabmenu';
+import Timer from '../timerpage';
+import { routineInfo } from '../../redux/reducers/routineInfo';
 
 const Container = styled.div`
   display: flex;
@@ -39,11 +37,11 @@ const BodyLeftSection = styled.div`
   height: 100%;
   overflow-y: auto;
 
-  @media ( max-width: 1280px ) {
+  @media (max-width: 1280px) {
     min-width: 30%;
   }
 
-  @media ( max-width: 768px ) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -55,7 +53,7 @@ const TraningSection = styled.div`
   box-sizing: border-box;
   margin-top: 15px;
 
-  @media ( max-width: 1280px ) {
+  @media (max-width: 1280px) {
     display: none;
   }
 `;
@@ -72,11 +70,11 @@ const BodyRightSection = styled.div`
   padding-bottom: 50px;
   height: 100%;
 
-  @media ( max-width: 1280px ) {
+  @media (max-width: 1280px) {
     max-width: 90%;
   }
 
-  @media ( max-width: 768px ) {
+  @media (max-width: 768px) {
     width: 100%;
     height: 100%;
     font-size: 11em;
@@ -104,43 +102,41 @@ const DndSection = styled.div`
 //   }
 // `;
 
-
 export default function Main() {
   const routines = useSelector((state) => state.routine.result);
-  const routineId = useSelector((state) => state.routineInfo.id)
+  const routineId = useSelector((state) => state.routineInfo.id);
   const [workouts, setWorkouts] = useState(null);
   const dispatch = useDispatch();
   // const userId = 5;
   // console.log(userId);
-  console.log(routines);
-  console.log(routineId)
+  console.log('루틴목록', routines);
+  console.log('루틴아이디', routineId);
 
   useEffect(() => {
-    getMyRoutine(routineId)
-  }, [])
+    getMyRoutine(routineId);
+  }, []);
 
-  const getMyRoutine = async(routineId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`
+  const getMyRoutine = async (routineId) => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
     const res = await axios.get(url, { withCredentials: true });
-    console.log(res.data);
-    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks))
+    // console.log(res.data);
+    console.log('겟루틴');
+    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks));
     // dispatch(dndUpdate(res.data.tasks))
-  }
+  };
 
   return (
     <>
-    <Container>
-      <HeadSection/>
-      <BodySection>
-        <TraningSection>
-          <Tabmenu></Tabmenu>
-        </TraningSection>
-        <BodyLeftSection>
-          <TodayRoutine></TodayRoutine>
-        </BodyLeftSection>
-        <BodyRightSection>
-          <Timer/>
-        </BodyRightSection>
+      <Container>
+        <HeadSection />
+        <BodySection>
+          <TraningSection>
+            <Tabmenu></Tabmenu>
+          </TraningSection>
+          <BodyLeftSection>
+            <TodayRoutine></TodayRoutine>
+          </BodyLeftSection>
+          <BodyRightSection>{/* <Timer/> */}</BodyRightSection>
         </BodySection>
       </Container>
     </>

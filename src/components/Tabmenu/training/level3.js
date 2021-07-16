@@ -57,6 +57,10 @@ const AddButton = styled.div`
   }
 `;
 
+const ImageContainer = styled.span`
+  height: 40px;
+  width: 40px;
+`;
 
 
 function List3({getRoutine}) {
@@ -119,7 +123,11 @@ function List3({getRoutine}) {
     <Container>
       {data.map((item) => (
         <ItemContainer key={item.id} name={item.name} set_time={item.set_time} rest_time={item.rest_time}>
-          <ItemTitle>{item.name}</ItemTitle>
+          <ItemTitle>{item.name}
+          <ImageContainer>
+            {/* <img id={item.id} src={`${process.env.NEXT_PUBLIC_url}/${item.workoutimage}`}></img> */}
+          </ImageContainer>
+          </ItemTitle>
           {/* <ItemList>세트 시간 {item.set_time}</ItemList>
           <ItemList>휴식 시간 {item.rest_time}</ItemList>
           <ItemList>총 3세트</ItemList> */}

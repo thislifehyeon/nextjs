@@ -28,7 +28,7 @@ export default function login({ modalLogin, setModalLogin }) {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res.data.data, '님 로그인성공');
+          console.log('로그인성공');
           if (modalLogin) {
             setModalLogin(false);
           }

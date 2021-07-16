@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 // import RoutineLists from './RoutineLists'
-import styled from 'styled-components'
-import axios from 'axios'
+import styled from 'styled-components';
+import axios from 'axios';
 import { currentRoutine } from '../../redux/reducers/routine';
-import {useRouter} from 'next/router'
-import Link from 'next/link'
-import {routineInfo} from '../../redux/reducers/routineInfo'
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { routineInfo } from '../../redux/reducers/routineInfo';
 
 const RoutineSection = styled.section`
   display: flex;
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-/*     
+  /*     
   @media ( max-width: 768px ) {
   display: flex;
   flex-direction: column;
@@ -36,8 +36,8 @@ const AddRoutineButton = styled.button`
   bottom: 5%;
 
   :hover {
-    transform: rotate( 45deg );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    transform: rotate(45deg);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     font-size: 2.4rem;
     text-shadow: 1rem;
   }
@@ -47,22 +47,21 @@ const RoutinePageHeader = styled.div`
   padding: 50px;
 `;
 
-
 function Routine() {
   const router = useRouter();
   const dispatch = useDispatch();
   const routines = useSelector((state) => state.routine.result);
   const userId = 5;
-  console.log(userId);
-  console.log(routines);
+  console.log('유저 아이디 :', userId);
+  console.log('루틴 목록 : ', routines);
 
   useEffect(() => {
     getRoutine();
   }, []);
 
   const getRoutine = async () => {
-    console.log("실행");
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`
+    console.log('실행');
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
     // const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
     const res = await axios.get(url, { withCredentials: true });
     dispatch(currentRoutine(res.data));
@@ -81,72 +80,73 @@ function Routine() {
     await getRoutine(userId);
   };
 
-////// 여기부터 routineLists
+  ////// 여기부터 routineLists
 
-const deleteHandler = (routineId) => {
-  // const routineId = e.target.parentElement.id
-  // console.log(e.target.parentElement.id);
-  deleteRoutine(routineId)
-}
-const deleteRoutine = async (routineId) => {
-  const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
-  const res = await axios.delete(url)
-  console.log(`${userId}의 루틴을 삭제했습니다`);
-  console.log(res);
-  getRoutine(userId, routineId);
-};
+  const deleteHandler = (routineId) => {
+    // const routineId = e.target.parentElement.id
+    // console.log(e.target.parentElement.id);
+    deleteRoutine(routineId);
+  };
+  const deleteRoutine = async (routineId) => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
+    const res = await axios.delete(url);
+    console.log(`${userId}의 루틴을 삭제했습니다`);
+    console.log(res);
+    getRoutine(userId, routineId);
+  };
 
-const getMyRoutine = async(e) => {
-  const id = e.target.id
-  const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${id}`
-  const res = await axios.get(url, { withCredentials: true });
-  console.log(res.data);
-  dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks))
-  e.preventDefault()
-}
+  const getMyRoutine = async (e) => {
+    const id = e.target.id;
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${id}`;
+    const res = await axios.get(url, { withCredentials: true });
+    console.log(res.data);
+    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks));
+    e.preventDefault();
+  };
 
-////// 여기까지 routineLists
-
-
-
-
+  ////// 여기까지 routineLists
 
   return (
     <>
-    <RoutinePageHeader></RoutinePageHeader>
-    <RoutineSection>
-    {routines &&
-      routines.map((routine) => (
-        <>
-        <Link href={`/routine/${routine.id}`} key={routine.id}>
-         <a>
-           <RoutineContainer
-            id={routine.id}
-            onClick={(e) => {getMyRoutine(e)}}
-            >
-            {/* <img id={routine.id} src={`${process.env.NEXT_PUBLIC_url}/${img}`}></img> */}
-              <RoutineItem id={routine.id}>
-                <RoutineTitle id={routine.id}>{routine.name}</RoutineTitle>
-              </RoutineItem>
-            </RoutineContainer>
-          </a>
-        </Link>
-        <DeleteButton id={routine.id} onClick={() => deleteHandler(routine.id)}>-</DeleteButton>
-        </>
-        ))}
-    <AddRoutineButton 
-      onClick={()=>{addRoutine(userId)}}
-      // icon={{ as: 'i', className: 'plus'}}
-      >+</AddRoutineButton>
-  </RoutineSection>
-  </>
-  )
+      <RoutinePageHeader></RoutinePageHeader>
+      <RoutineSection>
+        {routines &&
+          routines.map((routine) => (
+            <>
+              <Link href={`/routine/${routine.id}`} key={routine.id}>
+                <a>
+                  <RoutineContainer
+                    id={routine.id}
+                    onClick={(e) => {
+                      getMyRoutine(e);
+                    }}
+                  >
+                    <img id={routine.id} src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
+                    <RoutineItem id={routine.id}>
+                      <RoutineTitle id={routine.id}>{routine.name}</RoutineTitle>
+                    </RoutineItem>
+                  </RoutineContainer>
+                </a>
+              </Link>
+              <DeleteButton id={routine.id} onClick={() => deleteHandler(routine.id)}>
+                -
+              </DeleteButton>
+            </>
+          ))}
+        <AddRoutineButton
+          onClick={() => {
+            addRoutine(userId);
+          }}
+          // icon={{ as: 'i', className: 'plus'}}
+        >
+          +
+        </AddRoutineButton>
+      </RoutineSection>
+    </>
+  );
 }
 
-export default Routine
-
-
-
+export default Routine;
 
 const RoutineContainer = styled.ul`
   display: flex;
@@ -156,8 +156,8 @@ const RoutineContainer = styled.ul`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  background: rgba( 255, 255, 255, 0.60 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 5%;
 
   img {

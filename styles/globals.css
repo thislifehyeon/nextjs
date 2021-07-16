@@ -6,13 +6,17 @@ body {
   margin: 0;
   font-family: -apple-system, InkLipquid, BlinkMacSystemFont, Segoe UI, 
   Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, 
-  NanumGothic-Bold, DoHyeon-Regular, NanumGothic-ExtraBold, NanumGothic-Regular, OpenSans;
+  NanumGothic-Bold, DoHyeon-Regular, NanumGothic-ExtraBold, NanumGothic-Regular, OpenSans
+  GmarketSansTTFLight, GmarketSansTTFBold, GmarketSansTTFMedium,
+  ELAND-choice-B, ELAND-choice-L, ELAND-choice-M, tway-sky
+  NEXONLv1GothicBold, NEXONLv1GothicLight, NEXONLv1GothicRegular, Army_Medium, Army_Bold;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
 }
@@ -21,8 +25,44 @@ a:hover {
   box-sizing: border-box;
   outline: none;
 }
-/* 
+
 @font-face {
+  font-family: 'tway-sky';
+  src: url('../src/font/tway_sky.ttf');
+}
+@font-face {
+  font-family: 'ELAND-choice-M';
+  src: url('../src/font/ELAND-choice-M.ttf');
+}
+@font-face {
+  font-family: 'ELAND-choice-L';
+  src: url('../src/font/ELAND-choice-L.ttf');
+}
+@font-face {
+  font-family: 'ELAND-choice-B';
+  src: url('../src/font/ELAND-choice-B.ttf');
+}
+@font-face {
+  font-family: 'GmarketSansTTFLight';
+  src: url('../src/font/GmarketSansTTFLight.ttf');
+}
+@font-face {
+  font-family: 'GmarketSansTTFBold';
+  src: url('../src/font/GmarketSansTTFBold.ttf');
+}
+@font-face {
+  font-family: 'NEXONLv1GothicBold';
+  src: url('../src/font/NEXONLv1GothicBold.ttf');
+}
+@font-face {
+  font-family: 'NEXONLv1GothicLight';
+  src: url('../src/font/NEXONLv1GothicLight.ttf');
+}
+@font-face {
+  font-family: 'NEXONLv1GothicRegular';
+  src: url('../src/font/NEXONLv1GothicRegular.ttf');
+}
+/* @font-face {
   font-family: 'InkLipquid';
   src: url('../src/font/InkLipquidFonts.ttf');
 } */
