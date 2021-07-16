@@ -61,10 +61,12 @@ function Routine() {
 
   const getRoutine = async (userId) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
+    const url2 = `${process.env.NEXT_PUBLIC_url}/user`;
     const res = await axios.get(url, { withCredentials: true });
+    const res2 = await axios.get(url2, { withCredentials: true });
     dispatch(currentRoutine(res.data));
     // setRoutines(res.data.result)
-    console.log(res);
+    console.log(res2);
   };
 
   const addRoutine = async (userId) => {
