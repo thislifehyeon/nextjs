@@ -12,7 +12,7 @@ import {ModalOpenAction} from '../../redux/reducers/modal'
 import {deleteWorkout} from '../../redux/reducers/workout'
 import {dndUpdate} from '../../redux/reducers/workout'
 import {routineInfo} from '../../redux/reducers/routineInfo'
-import WorkoutItem from '../../src/components/WorkoutItem.js/index.js'
+
 resetServerContext();
 
 const DndContainer = styled.div`
