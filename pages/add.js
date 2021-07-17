@@ -51,7 +51,7 @@ export default function add() {
   console.log(workoutInfo);
 
   const addWorkout = (userId, workoutInfo) => {
-    const url = `http://localhost:3000/exercise`;
+    const url = `${process.env.NEXT_PUBLIC_url}/exercise`;
     const body = {
       userid: userId,
       name: workoutInfo.name,

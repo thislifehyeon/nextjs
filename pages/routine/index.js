@@ -76,6 +76,9 @@ function Routine() {
       share: 'false',
     };
     const res = await axios.post(url, body, { withCredentials: true });
+    if(res.status === 405){
+      alert("루틴을 생성하려면 로그인을 해주세요!")
+    }
     console.log(res);
     await getRoutine(userId);
   };
@@ -90,8 +93,13 @@ function Routine() {
   const deleteRoutine = async (routineId) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
     const res = await axios.delete(url);
-    console.log(`${userId}의 루틴을 삭제했습니다`);
-    console.log(res);
+    if(res.status === 202){
+      alert("기본루틴은 삭제가 불가능합니다.")
+    }
+    else{
+      console.log(`${userId}의 루틴을 삭제했습니다`);
+      console.log(res);
+    }
     getRoutine(userId, routineId);
   };
 
