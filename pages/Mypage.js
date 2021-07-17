@@ -80,6 +80,7 @@ const MyPage = () => {
     .catch(err => {
       console.log(err)
       alert("로그인을 해주세요.");
+      window.location.href = '/'
     })
   }
     
