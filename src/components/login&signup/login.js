@@ -31,7 +31,7 @@ export default function login({ modalLogin, setModalLogin }) {
         )
         .then((res) => {
           console.log('로그인성공');
-          const acces = Cookies.get(accessToken)
+          const acces = Cookies.get('accessToken')
           console.log(acces)
           document.cookie = "accessToken=login";
           if (modalLogin) {
