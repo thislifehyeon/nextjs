@@ -32,7 +32,7 @@ export default function login({ modalLogin, setModalLogin }) {
         .then((res) => {
           console.log('로그인성공');
           document.cookie = "accessToken=login";
-          console.log('토큰:  ',accessToken)
+          console.log('토큰:  ')
           if (modalLogin) {
             setModalLogin(false);
           }
