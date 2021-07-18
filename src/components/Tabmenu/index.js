@@ -11,33 +11,37 @@ const Container = styled.div`
   align-items: right;
   box-sizing: border-box;
   justify-content: center;
-  height: 400x;
+  width: 200px;
+  /* height: 400px; */
   /* position: absolute; */
 `;
 
 const Button = styled.ul`
   display: flex;
-  justify-content: center;
+  height: 100%;
+  /* justify-content: center; */
   flex-direction: column;
-  padding-left: 0;
-  margin-top: 30px;
-  margin-left: 20px;
-  width: 150px;
-  text-align: center;
-  align-items: stretch;
+  /* padding-left: 0; */
+  /* margin-top: 30px; */
+  /* margin-left: 20px; */
+  /* width: 150px; */
+  /* text-align: center; */
+  /* align-items: stretch; */
 `;
 
-const List = styled.li`
-  border: 1px solid lightgrey;
-  list-style: none;
+const List = styled.div`
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 2rem;
+  width: 200px;
+  height: 600px;
   color: lightgrey;
   font-weight: bold;
+  background-color: #000035;
+  margin: 2px;
   padding: 0 25px;
-  height: 30px;
+  height: 100px;
   border: none;
-  /* background-color: lightgrey; */
+  cursor: pointer;
   :hover {
     background-color: rgba(0, 0, 255, .2);
     border: 0;
@@ -53,6 +57,15 @@ const Second = styled.div`
 
 const Third = styled.div`
 `;
+
+
+const getMyRoutine = async(routineId) => {
+  const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=11`
+  const res = await axios.get(url, { withCredentials: true });
+  console.log(res.data);
+  dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks))
+}
+
 
 function Tabmenu() {
   const [menuNum, setMenuNum] = useState(0)

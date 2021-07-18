@@ -6,12 +6,16 @@ module.exports = {
     ],
   },
   env: {
-    url: 'http://localhost:8000',
+    url: 'http://localhost:3000',
   },
 };
 
-const withImages = require('next-images');
-module.exports = withImages();
+const withImages = require('next-images')
+module.exports = withImages({
+  webpack(config, { webpack }) {
+    return config
+  }
+})
 
 const withVideos = require('next-videos')
 module.exports = withVideos()

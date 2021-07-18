@@ -4,12 +4,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, InkLipquid, BlinkMacSystemFont, Segoe UI, 
-  Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, 
-  NanumGothic-Bold, DoHyeon-Regular, NanumGothic-ExtraBold, NanumGothic-Regular, OpenSans
-  GmarketSansTTFLight, GmarketSansTTFBold, GmarketSansTTFMedium,
-  ELAND-choice-B, ELAND-choice-L, ELAND-choice-M, tway-sky
-  NEXONLv1GothicBold, NEXONLv1GothicLight, NEXONLv1GothicRegular, Army_Medium, Army_Bold;
+  font-family: -apple-system
 }
 
 a {
@@ -25,9 +20,26 @@ a:hover {
   box-sizing: border-box;
   outline: none;
 }
+@font-face {
+  font-family: 'esamanru_Bold';
+  src: url('../src/font/esamanru Bold.ttf');
+}
+@font-face {
+  font-family: 'esamanru_Light';
+  src: url('../src/font/esamanru Light.ttf');
+}
+@font-face {
+  font-family: 'esamanru_Medium';
+  src: url('../src/font/esamanru Medium.ttf');
+}
+
 
 @font-face {
-  font-family: 'tway-sky';
+  font-family: 'Army_Bold';
+  src: url('../src/font/Army_Bold.ttf');
+}
+@font-face {
+  font-family: 'tway_sky';
   src: url('../src/font/tway_sky.ttf');
 }
 @font-face {
@@ -62,17 +74,38 @@ a:hover {
   font-family: 'NEXONLv1GothicRegular';
   src: url('../src/font/NEXONLv1GothicRegular.ttf');
 }
-/* @font-face {
+@font-face {
   font-family: 'InkLipquid';
   src: url('../src/font/InkLipquidFonts.ttf');
-} */
-/* 
+}
+
 @font-face {
     font-family: 'digital';
     src: url('../src/font/DS-DIGIB.TTF');
-  } */
+  }
 
-/* @font-face {
+
+@font-face {
+  font-family: 'OpenSans-Regular';
+  src: url('../src/font/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans-ExtraBold';
+  src: url('../src/font/OpenSans-ExtraBold.ttf');
+}
+
+@font-face {
+font-family: 'OpenSOpenSans-Bold';
+src: url('../src/font/OpenSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'DoHyeon-Regular';
+  src: url('../src/font/DoHyeon-Regular.ttf');
+}
+
+@font-face {
   font-family: 'NanumGothic-Bold';
   src: url('../src/font/NanumGothic-Bold.ttf');
 }
@@ -85,23 +118,4 @@ a:hover {
 @font-face {
   font-family: 'NanumGothic-Regular';
   src: url('../src/font/NanumGothic-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'OpenSans-Regular';
-  src: url('../src/font/OpenSans-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'OpenSans-ExtraBold';
-  src: url('../src/font/OpenSans-ExtraBold.ttf');
-}
-@font-face {
-  font-family: 'OpenSans-Bold';
-  src: url('../src/font/OpenSans-Bold.ttf');
-} */
-
-@font-face {
-  font-family: 'DoHyeon-Regular';
-  src: url('../src/font/DoHyeon-Regular.ttf');
 }

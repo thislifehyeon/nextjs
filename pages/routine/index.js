@@ -8,6 +8,85 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { routineInfo } from '../../redux/reducers/routineInfo';
 
+function Routine() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const routines = useSelector((state) => state.routine.result);
+  const routineId = router.query.id;
+
+  useEffect(() => {
+    getRoutine();
+  }, []);
+
+  const getRoutine = () => {
+    axios.get(`${process.env.NEXT_PUBLIC_url}/testroutine`, { withCredentials: true }).then((res) => dispatch(currentRoutine(res.data)));
+  };
+
+  const addRoutine = async (userId) => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
+    const body = {
+      userid: userId,
+      routine_name: '새 루틴',
+      share: 'false',
+    };
+    const res = await axios.post(url, body, { withCredentials: true });
+    console.log(res);
+    await getRoutine(userId);
+  };
+
+  const deleteRoutine = async (routineId) => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
+    const res = await axios.delete(url);
+    console.log(`${userId}의 루틴을 삭제했습니다`);
+    getRoutine(userId, routineId);
+  };
+
+  const getMyRoutine = async (e) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${e.target.id}`, { withCredentials: true });
+    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks));
+  };
+
+  return (
+    <>
+      <RoutinePageHeader></RoutinePageHeader>
+      <RoutineSection>
+        {routines &&
+          routines.map((routine, index) => (
+            <>
+              <Link href={`/routine/${routine.id}`} key={index}>
+                <RoutineContainer
+                  id={routine.id}
+                  key={index}
+                  onClick={(e) => {
+                    getMyRoutine(e);
+                  }}
+                >
+                  <img id={routine.id} src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
+                  <RoutineItem id={routine.id}>
+                    <DeleteButton className='delete_btn' id={routine.id} onClick={() => deleteRoutine(routineId)}>
+                      -
+                    </DeleteButton>
+                    <RoutineTitle id={routine.id}>{routine.name}</RoutineTitle>
+                  </RoutineItem>
+                </RoutineContainer>
+              </Link>
+            </>
+          ))}
+        <AddRoutineButton
+          onClick={() => {
+            addRoutine(userId);
+          }}
+          // icon={{ as: 'i', className: 'plus'}}
+        >
+          +
+        </AddRoutineButton>
+      </RoutineSection>
+    </>
+  );
+}
+
+export default Routine;
+
 const RoutineSection = styled.section`
   display: flex;
   justify-content: center;
@@ -47,118 +126,9 @@ const RoutinePageHeader = styled.div`
   padding: 50px;
 `;
 
-function Routine() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const routines = useSelector((state) => state.routine.result);
-  const userId = 5;
-  console.log('유저 아이디 :', userId);
-  console.log('루틴 목록 : ', routines);
-
-  useEffect(() => {
-    getRoutine();
-  }, []);
-
-  const getRoutine = async () => {
-    console.log('실행');
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-    // const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-    const res = await axios.get(url, { withCredentials: true });
-    dispatch(currentRoutine(res.data));
-    console.log(res);
-  };
-
-  const addRoutine = async (userId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-    const body = {
-      userid: userId,
-      routine_name: '새 루틴',
-      share: 'false',
-    };
-    const res = await axios.post(url, body, { withCredentials: true });
-    if(res.status === 405){
-      alert("루틴을 생성하려면 로그인을 해주세요!")
-    }
-    console.log(res);
-    await getRoutine(userId);
-  };
-
-  ////// 여기부터 routineLists
-
-  const deleteHandler = (routineId) => {
-    // const routineId = e.target.parentElement.id
-    // console.log(e.target.parentElement.id);
-    deleteRoutine(routineId);
-  };
-  const deleteRoutine = async (routineId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
-    const res = await axios.delete(url);
-    if(res.status === 202){
-      alert("기본루틴은 삭제가 불가능합니다.")
-    }
-    else{
-      console.log(`${userId}의 루틴을 삭제했습니다`);
-      console.log(res);
-    }
-    getRoutine(userId, routineId);
-  };
-
-  const getMyRoutine = async (e) => {
-    const id = e.target.id;
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${id}`;
-    const res = await axios.get(url, { withCredentials: true });
-    console.log(res.data);
-    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks));
-    e.preventDefault();
-  };
-
-  ////// 여기까지 routineLists
-
-  return (
-    <>
-      <RoutinePageHeader></RoutinePageHeader>
-      <RoutineSection>
-        {routines &&
-          routines.map((routine) => (
-            <>
-              <Link href={`/routine/${routine.id}`} key={routine.id}>
-                <a>
-                  <RoutineContainer
-                    id={routine.id}
-                    onClick={(e) => {
-                      getMyRoutine(e);
-                    }}
-                  >
-                    <img id={routine.id} src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
-                    <RoutineItem id={routine.id}>
-                      <RoutineTitle id={routine.id}>{routine.name}</RoutineTitle>
-                    </RoutineItem>
-                  </RoutineContainer>
-                </a>
-              </Link>
-              <DeleteButton id={routine.id} onClick={() => deleteHandler(routine.id)}>
-                -
-              </DeleteButton>
-            </>
-          ))}
-        <AddRoutineButton
-          onClick={() => {
-            addRoutine(userId);
-          }}
-          // icon={{ as: 'i', className: 'plus'}}
-        >
-          +
-        </AddRoutineButton>
-      </RoutineSection>
-    </>
-  );
-}
-
-export default Routine;
-
 const RoutineContainer = styled.ul`
   display: flex;
-  padding: 30px;
+  padding: 20px;
   flex-direction: row;
   /* margin-left: 40px; */
   justify-content: center;
@@ -167,15 +137,16 @@ const RoutineContainer = styled.ul`
   background: rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 5%;
-
+  margin: 30px;
+  cursor: pointer;
   img {
     height: 150px;
     width: 150px;
   }
 
-  :hover {
+  /* :hover {
     border: 7px solid #ffffff;
-  }
+  } */
 `;
 
 const RoutineItem = styled.div`
@@ -186,8 +157,13 @@ const RoutineItem = styled.div`
   font-size: 1rem;
   vertical-align: middle;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
+  .delete_btn {
+    position: absolute;
+    align-self: flex-end;
+    margin: 0px 0px 130px;
+  }
 `;
 
 const RoutineTitle = styled.h2`

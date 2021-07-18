@@ -29,7 +29,7 @@ const ItemContainer = styled.ul`
   min-width: 95%;
   padding: 0 10px;
   border-radius: 8px;
-  box-shadow: 4px 3px 2px 1px #fce8f8;
+  cursor: pointer;
   
   @media ( max-width: 768px ) {
     display:none;
@@ -41,25 +41,7 @@ const ItemContainer = styled.ul`
 `;
 
 const ItemTitle = styled.h4`
-
-`;
-
-const ItemList = styled.li`
-  list-style: none;
   text-align: center;
-  font-size: 1.2em;
-`;
-
-const AddButton = styled.div`
-  border-radius: 20%;
-  font-size: 1.4rem;
-  color: gray;
-  margin-right: 10px;
-  margin: 0;
-
-  :hover {
-    color: #000035;
-  }
 `;
 
 
@@ -88,20 +70,6 @@ function List1({getRoutine}) {
   }, [])
   const routineId = useSelector((state) => state.routineInfo.id)
 
-  const addWorkout = async(itemTitle) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
-    const body = {
-      userid: 1,
-      routine_id: routineId,
-      name: itemTitle,
-    }
-    const res = await axios.post(url, body, { withCredentials: true })
-    console.log(res);
-    const data = res.data
-
-    getMyRoutine(routineId) 
-    // dispatch(addWorkoutArray(data))
-  };
   
   const getMyRoutine = async(routineId) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`
@@ -109,11 +77,25 @@ function List1({getRoutine}) {
     console.log(res.data);
     dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks))
   }
-
+  
   // useEffect(() => {
-  //   getRoutine()
-  // }, [])
-
+    //   getRoutine()
+    // }, [])
+    const addWorkout = async(itemTitle) => {
+      const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
+      const body = {
+        userid: 1,
+        routine_id: routineId,
+        name: itemTitle,
+      }
+      const res = await axios.post(url, body, { withCredentials: true })
+      console.log(res);
+      const data = res.data
+  
+      getMyRoutine(routineId) 
+      // dispatch(addWorkoutArray(data))
+    };
+    
   const newWorkoutHandler = (e) => {
     const itemTitle = e.target.parentElement.children[0].innerText;
     // const itemSetTime = e.target.parentElement.children[1].innerText
@@ -125,20 +107,16 @@ function List1({getRoutine}) {
   return (
     <Container>
       {data.map((item) => (
-        <ItemContainer key={item.id} name={item.name} set_time={item.set_time} rest_time={item.rest_time}>
-
+        <ItemContainer 
+        key={item.id} 
+        name={item.name} 
+        set_time={item.set_time} 
+        rest_time={item.rest_time}
+        onClick={(e) => {
+          newWorkoutHandler(e);
+        }}
+        >
           <ItemTitle>{item.name}</ItemTitle>
-        {/* <img id={item.id} src={`${process.env.NEXT_PUBLIC_url}/${item.workoutimage}`}></img> */}
-          {/* <ItemList>세트 시간 {item.set_time}</ItemList>
-          <ItemList>휴식 시간 {item.rest_time}</ItemList>
-          <ItemList>총 3세트</ItemList> */}
-          <AddButton
-            onClick={(e) => {
-              newWorkoutHandler(e);
-            }}
-          >
-            +
-          </AddButton>
         </ItemContainer>
       ))}
     </Container>

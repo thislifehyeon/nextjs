@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 
 const VideoContainer = styled.video`
-  min-width: 50%;
+  min-width: 40%;
   /* padding-left: 40px; */
 
   @media (max-width:1280px) { 

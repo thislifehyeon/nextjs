@@ -1,43 +1,15 @@
 import styled from 'styled-components';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { timerSet, timerRunning, timerReset, timerWorkoutSet, timerCurWorkout, timerIsResting, totalTime } from '../redux/reducers/timer';
+import { timerSet, timerRunning, timerReset, timerWorkoutSet, timerCurWorkout, timerIsResting, totalTime } from '../../../redux/reducers/timer';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPause, faPlay, faStop, faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
-export default function timerpage({ data }) {
+
+
+function TimerModal({setTimerOpen, timerOpen}) {
   const router = useRouter();
-  console.log('쿼리', router.query);
-  // console.log(data);
-  const taskIds = data.tasks;
-  const total_sec = data.tasks.map((el) => el.set_time);
-
-  // console.log('초합', total_sec);
-  // total_sec.map((el) => console.log(el));
-  // const taskIds = [
-  //   //더미
-  //   { id: '1', name: '벤치프레스', set_number: 1, set_time: 1, rest_time: 1 },
-  //   { id: '2', name: '스쿼트', set_number: 3, set_time: 2, rest_time: 1 },
-  //   { id: '3', name: '데드리프트', set_number: 2, set_time: 1, rest_time: 1 },
-  // ];
-  // set_time -
-  // //////////
-  // total_sec % 60
-  // parseInt(total_sec / 60)
-  // //////////
-
-  const totalTime = (taskIds) => {
-    //분단위로 운동시간 총합 뽑아내기
-    const total = taskIds.reduce((acc, el) => {
-      return acc + (el.set_time * el.set_number + el.set_time * el.rest_time);
-    }, 0);
-    const hour = parseInt(total / 60);
-    const min = total % 60;
-    dispatch(timerSet(0, min, hour));
-    dispatch(timerReset(0, min, hour));
-  };
-
   const dispatch = useDispatch();
   const isRunning = useSelector((state) => state.timer.isRunning);
   const hours = useSelector((state) => state.timer.hours);
@@ -47,6 +19,7 @@ export default function timerpage({ data }) {
   const set = useSelector((state) => state.timer.workout_set);
   const cur = useSelector((state) => state.timer.workout_cur);
   const isResting = useSelector((state) => state.timer.isResting);
+  const taskIds = useSelector((state) => state.routineInfo.tasks);
 
   useEffect(() => {
     // 최초 한번
@@ -203,10 +176,10 @@ export default function timerpage({ data }) {
     }
   };
   return (
-    <>
+    <ModalContainer timerOpen={timerOpen} onClick={() => setTimerOpen(!timerOpen)}>
       <Body>
         <Info>
-          <div>{data ? data.name : ''}</div>
+          {/* <div>{data ? data.name : ''}</div> */}
           <div>{isResting ? '휴식 시간' : taskIds[cur].name}</div>
           <div>{taskIds ? `${set} / ${taskIds[cur].set_number} 세트` : null}</div>
         </Info>
@@ -224,36 +197,41 @@ export default function timerpage({ data }) {
           <FontAwesomeIcon icon={faForward} className='btn next' onClick={() => nextWorkout(taskIds, cur)} />
         </ButtonContainer>
       </Body>
-    </>
-  );
+    </ModalContainer>
+  )
 }
 
-export const getServerSideProps = async (ctx) => {
-  const token = ctx.req.headers.cookie.split(' ')[1].split('=')[1];
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=11`, {
-    headers: { Cookie: `accessToken=${token}` },
-    withCredentials: true,
-  });
-  const data = res.data;
-  return {
-    props: {
-      data,
-    },
-  };
-};
+export default TimerModal
+
+const ModalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 999;
+
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background: rgba( 0, 0, 0, 0.60 );
+  /* background-color: #0b0b0b; */
+  opacity: ${(props) => (props.timerOpen ? "100%" : "0%")};
+  top: ${(props) => (props.timerOpen ? "0" : "-100%")};
+  `;
 
 let Body = styled.div`
+  z-index: 999;
   display: flex;
-  width: 90%;
-  height: 70vh;
-  padding: 50px;
+  min-width: 40vw;
+  height: 90vh;
+  padding: 20px;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #fff8fd;
   color: #3e3e3e;
   border-radius: 20px;
-  -webkit-backdrop-filter: blur(50px);
-  backdrop-filter: blur(50px);
+  background-color: #ffffff;
+  opacity: 0.95;
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 12.0px );
 
   @media (max-width: 1280px) {
     max-width: 100%;
@@ -272,11 +250,13 @@ let Body = styled.div`
 
 let Info = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 40px 0px 0px 0px;
+  padding: 30px 0px 0px 0px;
   font-size: 2rem;
   font-weight: bold;
+  font-family: esamanru_Light;
   > div {
     display: flex;
     justify-content: center;
@@ -284,6 +264,7 @@ let Info = styled.div`
     font-size: 2.2rem;
     min-width: 45%;
     height: 100%;
+    padding: 10px 0;
 
     @media (max-width: 1280px) {
       width: 70%;
@@ -303,13 +284,15 @@ let Info = styled.div`
 let Time = styled.div`
   font-family: 'digital';
   background-color: #ffffff;
+  margin-top: 30px;
+  padding-top: 150px;
   align-self: center;
-  width: 100%;
-  border: 1px solid black;
-  border-radius: 20px;
-  font-family: OpenSans-Bold;
-  /* margin: 30px 0; */
-  font-size: 8em;
+  width: 27rem;
+  height: 27rem;
+  border: 4px solid #ffd951;
+  border-radius: 50%;
+  font-family: esamanru_Medium;
+  font-size: 7rem;
   text-align: center;
 
   @media (max-width: 1280px) {
@@ -326,9 +309,10 @@ let Time = styled.div`
 `;
 
 let ButtonContainer = styled.div`
+  margin: 40px 0 70px 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   min-width: 8rem;
   .btn {
