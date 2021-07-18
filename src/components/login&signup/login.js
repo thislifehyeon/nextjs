@@ -3,6 +3,7 @@ import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 export default function login({ modalLogin, setModalLogin }) {
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function login({ modalLogin, setModalLogin }) {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log('로그인 성공 : ', res.data.data);
+          console.log('로그인 성공 : ', res.status);
           const acces = Cookies.get('accessToken')
           console.log(acces)
           document.cookie = "accessToken=login";
