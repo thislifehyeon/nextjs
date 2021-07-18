@@ -29,6 +29,9 @@ export default function login({ modalLogin, setModalLogin }) {
         )
         .then((res) => {
           console.log('로그인 성공 : ', res.data.data);
+          const acces = Cookies.get('accessToken')
+          console.log(acces)
+          document.cookie = "accessToken=login";
             setModalLogin(false);
             router.push('/');
         })
@@ -47,6 +50,9 @@ export default function login({ modalLogin, setModalLogin }) {
       })
       .then((res) => {
         if (res.status === 200) {
+          const acces = Cookies.get('accessToken')
+          console.log(acces)
+          document.cookie = "accessToken=login";
           alert('로그인에 성공했습니다.');
         } else if (res.status === 201) {
           alert('회원가입에 성공했습니다.');
