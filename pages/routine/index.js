@@ -37,8 +37,13 @@ function Routine() {
   const deleteRoutine = async (routineId) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
     const res = await axios.delete(url);
-    console.log(`${userId}의 루틴을 삭제했습니다`);
-    getRoutine(userId, routineId);
+    if(res.status === 202){
+      alert('기본루틴은 삭제할 수 없습니다.')
+    }
+    else{
+      console.log(`${userId}의 루틴을 삭제했습니다`);
+      getRoutine(userId, routineId);
+    }
   };
 
   const getMyRoutine = async (e) => {

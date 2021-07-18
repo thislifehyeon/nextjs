@@ -33,6 +33,11 @@ function Modal({ setModalOpen, modalOpen, id, name }) {
         },
         { withCredentials: true }
       )
+      .then((res) => {
+        if (res.status === 202){
+          alert('기본루틴은 수정할 수 없습니다.')
+        }
+      })
       .then(() => console.log('성공'))
       .then(() => {
         if (modalOpen) {
