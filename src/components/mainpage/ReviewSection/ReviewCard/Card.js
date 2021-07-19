@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {motion} from 'framer-motion';
 
 const ReviewCardContainer = styled.li`
   background: rgba(255, 255, 255, 0.6);

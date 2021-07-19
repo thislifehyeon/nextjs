@@ -6,72 +6,44 @@ import {routineInfo} from '../../../redux/reducers/routineInfo';
 
 
 
-function NewTabmenu() {
-  const dispatch = useDispatch();
-  const routineId = 1;
-  const [trainingOne, setTrainingOne] = useState([])
-  const [trainingTwo, setTrainingTwo] = useState([])
-  const [trainingThree, setTrainingThree] = useState([])
+function NewTabmenu({data, routineId, currentWorkouts, setCurrentWorkouts}) {
+  // console.log('탭메뉴에서의 ', data);
+  // console.log('탭메뉴에서의 루틴아이디', routineId);
+  const items = data
+  const curWorkout1 = items.filter((item) => (
+    item.category === '웨이트운동' && item.default === true
+  ))
+  const curWorkout2 = items.filter((item) => (
+    item.category === '유산소운동' && item.default === true
+  ))
+  const curWorkout3 = items.filter((item) => (
+    item.category === '휴식' && item.default === true
+  ))
+  // console.log('웨이트운동 :', curWorkout1);
+  // console.log('유산소운동 :', curWorkout2);
+  // console.log('휴식 :', curWorkout3);
+
+  const [trainingOne, setTrainingOne] = useState(curWorkout1)
+  const [trainingTwo, setTrainingTwo] = useState(curWorkout2)
+  const [trainingThree, setTrainingThree] = useState(curWorkout3)
   const [trainingOneToggle, setTrainingOneToggle] = useState(true)
   const [trainingTwoToggle, setTrainingTwoToggle] = useState(false)
   const [trainingThreeToggle, setTrainingThreeToggle] = useState(false)
 
-  const getMyRoutine = async(routineId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=1`
-    const res = await axios.get(url, { withCredentials: true });
-    console.log(res.data);
-    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks))
-  }
-  
-  const getWorkout = async () => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
-    const res = await axios.get(url, { withCredentials: true })
-    console.log(res.data.result);
-    const items = res.data.result;
-    const curWorkout1 = items.filter((item) => (
-      item.category === '웨이트운동' && item.default === true
-    ))
-    console.log(curWorkout1);
-    setTrainingOne(curWorkout1)
-
-    const curWorkout2 = items.filter((item) => (
-      item.category === '유산소운동' && item.default === true
-    ))
-    console.log(curWorkout2);
-    setTrainingTwo(curWorkout2)
-    
-    const curWorkout3 = items.filter((item) => (
-      item.category === '휴식' && item.default === true
-    ))
-    console.log(curWorkout3);
-    setTrainingThree(curWorkout3)
-  }
-  
-  useEffect(() => {
-    getWorkout()
-  }, [])
-  
-  const ToggleHandler = () => {
-    console.log(trainingOneToggle);
-    setTrainingOneToggle(!trainingOneToggle)
-  }
-
   const addWorkout = async(itemTitle) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
     const body = {
-      userid: 1,
       routine_id: routineId,
       name: itemTitle,
     }
     const res = await axios.post(url, body, { withCredentials: true })
-    console.log(res);
     const data = res.data
-
-    getMyRoutine(routineId) 
+    setCurrentWorkouts([...currentWorkouts, data])
   };
-    
+
   const newWorkoutHandler = (e) => {
-    const itemTitle = e.target.parentElement.children[0].innerText;
+    const itemTitle = e.target.innerText;
+    // console.log(e.target.innerText);
     addWorkout(itemTitle);
   };
   
@@ -173,7 +145,7 @@ const TrainingOneList = styled.ul`
   margin-top: 93px;
   position:absolute;
   top: ${(props) => (props.trainingOneToggle ? "15%" : "-1000px" )};
-  user-select: ${(props) => (props.trainingOneToggle ? "all" : "none" )};
+  /* user-select: ${(props) => (props.trainingOneToggle ? "all" : "none" )}; */
   opacity: ${(props) => (props.trainingOneToggle ? "100%" : "0" )};
 `;
 
@@ -185,7 +157,7 @@ const TrainingTwoList = styled.ul`
   margin-top: 90px;
   position:absolute;
   top: ${(props) => (props.trainingTwoToggle ? "15%" : "-1000px" )};
-  user-select: ${(props) => (props.trainingTwoToggle ? "all" : "none" )};
+  /* user-select: ${(props) => (props.trainingTwoToggle ? "all" : "none" )}; */
   opacity: ${(props) => (props.trainingTwoToggle ? "100%" : "0" )};
 `;
 
@@ -197,7 +169,7 @@ const TrainingThreeList = styled.ul`
   margin-top: 95px;
   position:absolute;
   top: ${(props) => (props.trainingThreeToggle ? "15%" : "-1000px" )};
-  user-select: ${(props) => (props.trainingOneToggle ? "all" : "none" )};
+  /* user-select: ${(props) => (props.trainingOneToggle ? "all" : "none" )}; */
   opacity: ${(props) => (props.trainingThreeToggle ? "100%" : "0" )};
 `;
 

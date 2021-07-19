@@ -1,28 +1,19 @@
 import axios from 'axios';
-import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetServerContext, DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { workoutInfo } from '../../../redux/reducers/workoutInfo';
-import { routineInfo } from '../../../redux/reducers/routineInfo';
+import React, {useState, useEffect} from 'react'
+import { resetServerContext, DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
-import Modal from '../../../src/components/ex_update_Modal';
-import {useRouter} from 'next/router';
-
+import styled from 'styled-components'
+import Modal from '../ex_update_Modal'
+import {useDispatch, useSelector} from 'react-redux'
+import {routineInfo} from '../../../redux/reducers/routineInfo'
 resetServerContext();
 
-function TodayRoutine({TimerOpenHandler}) {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const routineId = useSelector((state) => state.routineInfo.id)
-  const currentWorkouts = useSelector((state) => state.routineInfo.tasks)
-  const isOpen = useSelector((state) => state.modal)
-  const [workouts, setWorkouts] = useState(null)
-  // const routineId = useSelector((state) => state.routineInfo.id)
-  console.log(workouts);
 
 
+function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts}) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [workoutId, setWorkoutId] = useState(null);
   //드래그앤드롭으로 순서 바꾸기
   const orderChangeHandler = async(routineId, workouts) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine`
@@ -32,24 +23,12 @@ function TodayRoutine({TimerOpenHandler}) {
     }
     const res = await axios.patch(url, body, {withCredentials: true})
     console.log(res.data.exercise);
-    getMyRoutine(routineId)
-  }
-  const getMyRoutine = async(routineId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`
-    const res = await axios.get(url, { withCredentials: true });
-    console.log(res.data);
-    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks))
-    // dispatch(dndUpdate(res.data.tasks))
   }
 
-  useEffect(() => {
-    setWorkouts(currentWorkouts)
-  }, [])
-
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "#fff9f9",
-  display: "flex",
-});
+  const getListStyle = isDraggingOver => ({
+    background: isDraggingOver ? "lightblue" : "#fff9f9",
+    display: "flex",
+  });
 
   const [editMode, setEditMode] = useState(false)
 
@@ -66,17 +45,9 @@ const getListStyle = isDraggingOver => ({
       
       return result;
     };
-    // dispatch(dndUpdate(reorder(result))
-    setWorkouts(reorder(workouts, result.source.index, result.destination.index));
+    setCurrentWorkouts(reorder(currentWorkouts, result.source.index, result.destination.index));
   };
 
-  const workoutUpdateHandler = (id) => {
-    setModalOpen(!modalOpen);
-    dispatch(workoutInfo(id));
-  };
-
-  const [modalOpen, setModalOpen] = useState(false);
-  console.log(modalOpen);
   const triggerEditMode = () => {
     setEditMode(true);
     // console.log("editMode: ",editMode);
@@ -84,55 +55,26 @@ const getListStyle = isDraggingOver => ({
 
   const endEditMode = () => {
     setEditMode(false);
-    orderChangeHandler(routineId, workouts)
-    // console.log("editMode: ", editMode);
+    orderChangeHandler(routineId, currentWorkouts)
   };
 
-  const workoutDeleteHandler = async (e, routineId) => {
-    // const id = e.target.parentElement.parentElement.id
-    const targetId = e.target.parentElement.parentElement.id
-    console.log(targetId)
-    const url = `${process.env.NEXT_PUBLIC_url}/testexercise?workoutid=${targetId}`
+  const workoutDeleteHandler = async (e, id) => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testexercise?workoutid=${id}`
     const res = await axios.delete(url, {withCredentials: true})
-
-    console.log(res)
-    // console.log(routineId);
-    getMyRoutine(routineId)
+    setCurrentWorkouts(res.data.result)
   }
 
-  const updateWorkout = async (routineId) =>{
-    const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
-    const res = await axios.patch(url, {withCredentials: true})
-    console.log(res);
-  } 
-  const workoutIds = workouts && workouts.map((workout) => (workout.id))
-  // const workoutIds = useSelector((state) => state.routineInfo.tasks.)
-  // console.log(currentWorkouts)
-  console.log(currentWorkouts);
+  const updateHandler = async (e) => {
+    console.log(e.target.id);
+    setModalOpen(!modalOpen)
+    setWorkoutId(e.target.id)
+  }
 
-  // const workoutIds = currentWorkouts.map((curWorkout) => (curWorkout.id))
-  // console.log(workoutIds);
-
-
-  useEffect(() => {
-    setWorkouts(currentWorkouts)
-  }, [currentWorkouts])
-  // console.log(workouts)
-  // console.log(workoutIds);
-  // console.log(routineId);
-
-// const routineUpdateHandler = async(workoutIds) => {
-//   const url = `${process.env.NEXT_PUBLIC_url}/testroutine`
-//   const body = {
-//     routine_id : routineId,
-//     exercise_array : [...workoutIds]
-//   }
-//   const res = await axios.patch(url, body)
-//   console.log(res);
-// }
+const workoutIds = currentWorkouts && currentWorkouts.map((workout) => (workout.id))
 
 const [btnStatus, setBtnStatus] = useState(false);
 const [scrollY, setScrollY] = useState(0);
+
 
 useEffect(() =>{
   const watch = () => {
@@ -162,7 +104,7 @@ const handleFollow = () => {
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
               >
-                {workouts && workouts.map((item, index) => (
+                {currentWorkouts && currentWorkouts.map((item, index) => (
                   <Draggable
                   isDragDisabled={!editMode}
                   key={item.id}
@@ -172,6 +114,7 @@ const handleFollow = () => {
                     {(provided, snapshot) => (
                       <div>
                           <Item
+                            key={item.id}
                             id={item.id}
                             index={index}
                             name={item.name}
@@ -181,28 +124,18 @@ const handleFollow = () => {
                             isDragging={snapshot.isDragging}
                             draggableStyle={provided.draggableStyle}
                             >
-                            <div>
-                              <ItemName>{item.name}</ItemName>
-                              <ButtonContainer id={item.id}>
-                                <UpdateButton
-                                  onClick={() => {
-                                    workoutUpdateHandler(item.id);
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faEdit} />
-                                </UpdateButton>
-                                {/* // 삭제버튼 */}
-                                <UpdateButton>
-                                  <FontAwesomeIcon
-                                    icon={faTrashAlt}
-                                    id={item.id}
-                                    onClick={(e) => {
-                                      workoutDeleteHandler(e, routineId);
-                                    }}
-                                  ></FontAwesomeIcon>
-                                </UpdateButton>
-                              </ButtonContainer>
-                            </div>
+                          <div>
+                            <ItemName>{item.name}</ItemName>
+                            <ButtonContainer>
+                              <UpdateButton 
+                              onClick={(e)=>updateHandler(e)}
+                              id={item.id}> 수정
+                              </UpdateButton>
+                              {/* // 삭제버튼 */}
+                              <UpdateButton id={item.id} onClick={(e)=>workoutDeleteHandler(e, item.id)}> 삭제
+                              </UpdateButton>
+                            </ButtonContainer>
+                          </div>
                           <InfoContainer>
                             <span>총 {item.set_number}세트</span>
                             <span>운동시간: {Math.floor(item.rest_time/60)}분 {(item.rest_time % 60)}초</span>
@@ -223,14 +156,28 @@ const handleFollow = () => {
       <ButtonContainer2 >
        <RotateButton onClick={triggerEditMode}>순서 변경</RotateButton>
         <RotateButton onClick={endEditMode}>저장</RotateButton>
-        <StartButton onClick={() => router.push('/timer')}>시작</StartButton>
+        <StartButton>시작</StartButton>
       </ButtonContainer2>
-    <Modal setModalOpen={setModalOpen} modalOpen={modalOpen} ></Modal>
+      <Modal 
+      workoutId={workoutId}
+      setModalOpen={setModalOpen} 
+      modalOpen={modalOpen} 
+      setCurrentWorkouts={setCurrentWorkouts}
+      currentWorkouts={currentWorkouts}
+      ></Modal>
+
   </>
   )
 }
 
 export default TodayRoutine;
+
+
+
+const ImageContainer = styled.img`
+  height: 100%;
+  width: 100%;
+`;
 
 const DndContainer = styled.div`
   display: flex;
@@ -243,7 +190,7 @@ const DndContainer = styled.div`
 `;
 
 const ItemContainer = styled.div`
-  display: flex;
+  display: flex; 
   flex-direction: column;
   border-radius: 6px;
   overflow-y: scroll;
@@ -305,7 +252,7 @@ const Item = styled.ul`
 const InfoContainer = styled.ul`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:space-between;
   width: 100%;
   padding-bottom: 20px;
 `;
@@ -328,13 +275,13 @@ const ItemMemo = styled.li`
   list-style: none;
   `;
 
-const UpdateButton = styled.span`
+const UpdateButton = styled.a`
   /* margin-right: 10px; */
   box-sizing: border-box;
   max-height: 18px;
+  padding: 0 10px;
   cursor: pointer;
   font-family: NanumGothic-Bold;
-  margin: 3px;
   /* font-weight: 800; */
   `;
 
@@ -396,10 +343,4 @@ const StartButton = styled.div`
     font-weight: 600;
     color: white;
   }
-`;
-
-
-const ImageContainer = styled.img`
-  height: 100%;
-  width: 100%;
 `;

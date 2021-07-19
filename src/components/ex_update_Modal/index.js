@@ -1,66 +1,66 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ModalOpenAction } from '../../../redux/reducers/modal';
+import { workoutInfo } from '../../../redux/reducers/workoutInfo';
 import { routineInfo } from '../../../redux/reducers/routineInfo';
-import axios from 'axios';
 
-function Modal({ setModalOpen, modalOpen, id, name }) {
-  const routineId = useSelector((state) => state.routineInfo.id);
-  const workoutId = useSelector((state) => state.workoutInfo.id);
-  const dispatch = useDispatch();
-  // const routineId = 11;
-  console.log(workoutId);
-  console.log(routineId);
+import axios from 'axios';
+import { faBorderStyle } from '@fortawesome/free-solid-svg-icons';
+
+function Modal({ 
+  currentWorkouts, 
+  setCurrentWorkouts, 
+  setModalOpen, 
+  modalOpen, 
+  workoutId
+}) {
   const [values, setValues] = useState({ name: '', set_number: '', minutes: '', seconds: '', rest_minutes: '', rest_seconds: '', memo: '' });
   const inputHandler = (e) => {
     //input value 핸들링 함수
-    console.log(e);
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
 
-  const updateWorkoutInfo = (workoutId, values) => {
-    axios
-      .patch(
-        `${process.env.NEXT_PUBLIC_url}/testexercise`,
-        {
-          workoutid: workoutId,
-          name: values.name,
-          set_number: values.set_number,
-          set_time: values.minutes * 6 + values.seconds,
-          rest_time: values.rest_minutes * 6 + values.rest_seconds,
-          memo: values.memo,
-        },
-        { withCredentials: true }
-      )
-      .then(() => console.log('성공'))
-      .then(() => {
-        if (modalOpen) {
-          setModalOpen(false);
-        }
-      })
-      .then(() => getMyRoutine(routineId))
-      .catch(() => {
-        console.log('요청 실패');
-        if (modalOpen) {
-          setModalOpen(false);
-        }
-      });
+  const updateWorkoutInfo = async (workoutId, values) => {
+    console.log("요청");
+    const url = `${process.env.NEXT_PUBLIC_url}/testexercise`
+    let body = {
+      workoutid: workoutId,
+      name: values.name,
+      memo: values.memo,
+    }
+    let set_time = values.minutes * 6 + values.seconds
+    let rest_time = values.rest_minutes * 6 + values.rest_seconds
+    
+    if(values.set_number !== "") {
+      body.set_number = values.set_number
+    }
+    if(set_time !== "") {
+      body.set_time = values.set_time
+    }
+    if(rest_time !== "") {
+      body.rest_time = values.rest_time
+    }    
 
-    getMyRoutine(routineId);
+    const res = await axios.patch(url, body, {withCredential: true})
+    console.log(res);
+    setModalOpen(!modalOpen)
+    setCurrentWorkouts([...currentWorkouts, res.data.result])
+    console.log(currentWorkouts);
   };
 
-  const getMyRoutine = async (routineId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
-    const res = await axios.get(url, { withCredentials: true });
-    console.log(res.data);
-    dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks));
-  };
+  // const getMyRoutine = async (routineId) => {
+  //   const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
+  //   const res = await axios.get(url, { withCredentials: true });
+  //   console.log(res.data);
+  //   dispatch(routineInfo(res.data.id, res.data.name, res.data.tasks));
+  // };
 
-  useEffect(() => {
-    // setModalOpen(false);
-    getMyRoutine(routineId);
-  }, []);
+  // useEffect(() => {
+  //   // setModalOpen(false);
+  //   getMyRoutine(routineId);
+  // }, []);
 
   return (
     <ModalSection modalOpen={modalOpen}>
@@ -143,7 +143,6 @@ function Modal({ setModalOpen, modalOpen, id, name }) {
       <ModalSaveBtn
         onClick={() => {
           updateWorkoutInfo(workoutId, values);
-          getMyRoutine(routineId);
         }}
       >
         저장
@@ -182,6 +181,7 @@ export const ModalSection = styled.section`
   justify-content: space-evenly;
   align-items: center;
   z-index: 999;
+  left: 0;
   opacity: ${(props) => (props.modalOpen ? '100%' : '0')};
   top: ${(props) => (props.modalOpen ? '0' : '-1500%')};
   height: 580px;

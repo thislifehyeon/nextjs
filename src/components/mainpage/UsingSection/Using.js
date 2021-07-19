@@ -10,7 +10,6 @@ function Using() {
         <Script></Script>
         <Script></Script>
       </TextContainer>
-
       <ImageContainer>그림이 들어갈 곳 </ImageContainer>
     </UsingSection>
   )
