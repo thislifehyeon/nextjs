@@ -8,10 +8,12 @@ import { routineInfo } from '../../../redux/reducers/routineInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../../../src/components/ex_update_Modal';
+import {useRouter} from 'next/router';
 
 resetServerContext();
 
 function TodayRoutine({TimerOpenHandler}) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const routineId = useSelector((state) => state.routineInfo.id)
   const currentWorkouts = useSelector((state) => state.routineInfo.tasks)
@@ -221,7 +223,7 @@ const handleFollow = () => {
       <ButtonContainer2 >
        <RotateButton onClick={triggerEditMode}>순서 변경</RotateButton>
         <RotateButton onClick={endEditMode}>저장</RotateButton>
-        <StartButton onClick={TimerOpenHandler}>시작</StartButton>
+        <StartButton onClick={() => router.push('/timer')}>시작</StartButton>
       </ButtonContainer2>
     <Modal setModalOpen={setModalOpen} modalOpen={modalOpen} ></Modal>
   </>

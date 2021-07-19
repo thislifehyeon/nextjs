@@ -2,17 +2,15 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TodayRoutine from '../../src/components/TodayRoutine';
-import { routineInfo } from '../../redux/reducers/routineInfo';
-import Tabmenu from '../../src/components/newTabMenu';
-// import TimerModal from '../../src/components/TimerModal/[id]';
-
-
+import TodayRoutine from '../../../src/components/TodayRoutine';
+import { routineInfo } from '../../../redux/reducers/routineInfo';
+import Tabmenu from '../../../src/components/newTabMenu';
+import TimerModal from '../../../src/components/TimerModal';
 function New() {
   const routineId = useSelector((state) => state.routineInfo.id);
   const routines = useSelector((state) => state.routine.result);
-  const [timerOpen, setTimerOpen] = useState(false)
   const [workouts, setWorkouts] = useState(null);
+  const [timerOpen, setTimerOpen] = useState(false)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,13 +40,14 @@ function New() {
           <TodayRoutine TimerOpenHandler={TimerOpenHandler}></TodayRoutine>
         </SecondSection>
       </SectionContainer>
-      {/* <TimerModal setTimerOpen={setTimerOpen} timerOpen={timerOpen}></TimerModal> */}
     </Container>
+    {/* <TimerModal timerOpen={timerOpen} setTimerOpen={setTimerOpen} ></TimerModal> */}
     </>
   )
 }
 
 export default New
+
 
 const Container = styled.div`
   display: flex;
@@ -85,3 +84,4 @@ const SecondSection = styled.div`
   /* background-color: pink; */
   border-radius: 30px;
 `;
+

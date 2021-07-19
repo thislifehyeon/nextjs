@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { timerSet, timerRunning, timerReset, timerWorkoutSet, timerCurWorkout, timerIsResting, totalTime } from '../../../redux/reducers/timer';
+import { timerSet, timerRunning, timerReset, timerWorkoutSet, timerCurWorkout, timerIsResting, totalTime } from '../redux/reducers/timer';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPause, faPlay, faStop, faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 
 
-function TimerModal({setTimerOpen, timerOpen}) {
+function TimerModal({data}) {
   const router = useRouter();
   const dispatch = useDispatch();
   const isRunning = useSelector((state) => state.timer.isRunning);
@@ -19,8 +19,8 @@ function TimerModal({setTimerOpen, timerOpen}) {
   const set = useSelector((state) => state.timer.workout_set);
   const cur = useSelector((state) => state.timer.workout_cur);
   const isResting = useSelector((state) => state.timer.isResting);
-  const taskIds = useSelector((state) => state.routineInfo.tasks);
-
+  // const taskIds = useSelector((state) => state.routineInfo.tasks);
+  const taskIds = data;
   useEffect(() => {
     // 최초 한번
     // totalTime(taskIds); //총합운동시간
@@ -176,14 +176,15 @@ function TimerModal({setTimerOpen, timerOpen}) {
     }
   };
   return (
-    <ModalContainer timerOpen={timerOpen} onClick={() => setTimerOpen(!timerOpen)}>
+    <>
+    {/* <ModalContainer timerOpen={timerOpen} setTimerOpen={setTimerOpen}> */}
       <Body>
+        <CloseButton onClick={() => setTimerOpen(!timerOpen)}>x</CloseButton>
         <Info>
-          {/* <div>{data ? data.name : ''}</div> */}
+          <div>{data ? data.name : ''}</div>
           <div>{isResting ? '휴식 시간' : taskIds[cur].name}</div>
           <div>{taskIds ? `${set} / ${taskIds[cur].set_number} 세트` : null}</div>
         </Info>
-
         <Time>
           {hours ? `${hours}:` : null}
           {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
@@ -197,18 +198,45 @@ function TimerModal({setTimerOpen, timerOpen}) {
           <FontAwesomeIcon icon={faForward} className='btn next' onClick={() => nextWorkout(taskIds, cur)} />
         </ButtonContainer>
       </Body>
-    </ModalContainer>
+    {/* </ModalContainer> */}
+    </>
   )
 }
 
 export default TimerModal
 
+export const getServerSideProps = async (ctx) => {
+  const token = ctx.req.headers.cookie.split(' ')[1].split('=')[1];
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=11`, {
+    headers: { Cookie: `accessToken=${token}` },
+    withCredentials: true,
+  });
+  const data = res.data;
+  return {
+    props: {
+      data,
+    },
+  };
+};
+
+
+
+
+const CloseButton = styled.span`
+  width: 20px;
+  height: 20px;;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  text-align: center;
+  cursor: pointer;
+`;
+
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  z-index: 999;
-
+  z-index: 998;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -216,7 +244,7 @@ const ModalContainer = styled.div`
   /* background-color: #0b0b0b; */
   opacity: ${(props) => (props.timerOpen ? "100%" : "0%")};
   top: ${(props) => (props.timerOpen ? "0" : "-100%")};
-  `;
+`;
 
 let Body = styled.div`
   z-index: 999;
@@ -226,12 +254,16 @@ let Body = styled.div`
   padding: 20px;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   color: #3e3e3e;
   border-radius: 20px;
   background-color: #ffffff;
+  position: fixed;
   opacity: 0.95;
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 12.0px );
+  /* opacity: ${(props) => (props.timerOpen ? "100%" : "0%")};
+  top: ${(props) => (props.timerOpen ? "0" : "-100%")}; */
 
   @media (max-width: 1280px) {
     max-width: 100%;

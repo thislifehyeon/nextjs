@@ -33,11 +33,6 @@ a:hover {
   src: url('../src/font/esamanru Medium.ttf');
 }
 
-
-@font-face {
-  font-family: 'Army_Bold';
-  src: url('../src/font/Army_Bold.ttf');
-}
 @font-face {
   font-family: 'tway_sky';
   src: url('../src/font/tway_sky.ttf');

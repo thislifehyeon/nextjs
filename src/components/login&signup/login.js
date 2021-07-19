@@ -3,7 +3,6 @@ import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
 
 export default function login({ modalLogin, setModalLogin }) {
   const router = useRouter();
@@ -29,10 +28,7 @@ export default function login({ modalLogin, setModalLogin }) {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log('로그인 성공 : ', res.status);
-          const acces = Cookies.get('accessToken')
-          console.log(acces)
-          document.cookie = "accessToken=login";
+          console.log('로그인 성공 : ', res.data.data);
             setModalLogin(false);
             router.push('/');
         })
@@ -51,9 +47,6 @@ export default function login({ modalLogin, setModalLogin }) {
       })
       .then((res) => {
         if (res.status === 200) {
-          const acces = Cookies.get('accessToken')
-          console.log(acces)
-          document.cookie = "accessToken=login";
           alert('로그인에 성공했습니다.');
         } else if (res.status === 201) {
           alert('회원가입에 성공했습니다.');
