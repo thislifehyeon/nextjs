@@ -12,8 +12,9 @@ import Cookies from 'js-cookie';
 
 function New({data}) {
   const routineId = data[0].id
-  const [currentWorkouts, setCurrentWorkouts] = useState(data[0].tasks)  
-  console.log(currentWorkouts);
+  const [currentWorkouts, setCurrentWorkouts] = useState(data[0].tasks) 
+  const [timerOpen, setTimerOpen] = useState(false)
+  console.log(data);
 
   return (
     <>
@@ -29,7 +30,9 @@ function New({data}) {
             />
           </FirstSection>
           <SecondSection>
-            <TodayRoutine 
+            <TodayRoutine
+            timerOpen={timerOpen}
+            setTimerOpen={setTimerOpen}
             routineId={routineId} 
             currentWorkouts={currentWorkouts}
             setCurrentWorkouts={setCurrentWorkouts}
@@ -37,6 +40,7 @@ function New({data}) {
           </SecondSection>
         </SectionContainer>
       </Container>
+      <TimerModal taskIds={data[0].tasks} timerOpen={timerOpen} setTimerOpen={setTimerOpen}></TimerModal>
     </>
   )
 }
@@ -44,13 +48,14 @@ function New({data}) {
 export default New
 
 export async function getServerSideProps(ctx) {
+  //하나의 루틴 불러오기
   const token = ctx.req.headers.cookie.split(' ')[1].split('=')[1];
   const res1 = await axios.get(
     `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${ctx.params.id}`, 
     {headers: {  Cookie:`accessToken=${token}` }
   });
   const data = res1.data;
-
+  //모든 루틴 불러오기
   const res2 = await axios.get(
     `${process.env.NEXT_PUBLIC_url}/testexercise`, 
     {headers: {  Cookie:`accessToken=${token}` 

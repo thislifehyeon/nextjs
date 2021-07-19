@@ -21,6 +21,7 @@ function Modal({
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
+  console.log(values);
 
   const updateWorkoutInfo = async (workoutId, values) => {
     console.log("요청");
@@ -30,20 +31,30 @@ function Modal({
       name: values.name,
       memo: values.memo,
     }
-    let set_time = values.minutes * 6 + values.seconds
-    let rest_time = values.rest_minutes * 6 + values.rest_seconds
+    let set_time_min = values.minutes
+    let set_time_sec = values.seconds
+    let rest_time_min = values.rest_minutes
+    let rest_time_sec = values.rest_seconds
+
     
     if(values.set_number !== "") {
-      body.set_number = values.set_number
+      body.set_number = Number(values.set_number)
     }
-    if(set_time !== "") {
-      body.set_time = values.set_time
+    if(set_time_min !== "") {
+      body.set_time_min = Number(set_time_min)
     }
-    if(rest_time !== "") {
-      body.rest_time = values.rest_time
+    if(set_time_sec !== "") {
+      body.set_time_sec = Number(set_time_sec)
+    }    
+    if(rest_time_min !== "") {
+      body.rest_time_min = Number(rest_time_min)
+    }    
+    if(rest_time_sec !== "") {
+      body.rest_time_sec = Number(rest_time_sec)
     }    
 
     const res = await axios.patch(url, body, {withCredential: true})
+    console.log(body);
     console.log(res);
     setModalOpen(!modalOpen)
     setCurrentWorkouts(res.data.result)

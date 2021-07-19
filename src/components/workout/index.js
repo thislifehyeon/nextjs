@@ -11,7 +11,7 @@ resetServerContext();
 
 
 
-function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts}) {
+function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts, timerOpen, setTimerOpen}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [editMode, setEditMode] = useState(false)
   const [workoutId, setWorkoutId] = useState(null);
@@ -139,8 +139,8 @@ const handleFollow = () => {
                           </div>
                           <InfoContainer>
                             <span>총 {item.set_number}세트</span>
-                            <span>운동시간: {Math.floor(item.rest_time/60)}분 {(item.rest_time % 60)}초</span>
-                            <span>세트 간 휴식: {Math.floor(item.rest_time/60)}분 {(item.rest_time % 60)}초</span>
+                            <span>운동시간: {item.set_time_min}분 {item.set_time_sec}초</span>
+                            <span>세트 간 휴식: {item.rest_time_min}분 {item.rest_time_sec}초</span>
                           </InfoContainer>
                         <ItemMemo>{item.memo}</ItemMemo>
                       </Item>
@@ -157,7 +157,7 @@ const handleFollow = () => {
       <ButtonContainer2 >
        <RotateButton onClick={triggerEditMode}>순서 변경</RotateButton>
         <RotateButton onClick={endEditMode}>저장</RotateButton>
-        <StartButton>시작</StartButton>
+        <StartButton onClick={()=> setTimerOpen(!timerOpen)}>시작</StartButton>
       </ButtonContainer2>
       <Modal 
       workoutId={workoutId}
@@ -166,7 +166,6 @@ const handleFollow = () => {
       setCurrentWorkouts={setCurrentWorkouts}
       currentWorkouts={currentWorkouts}
       ></Modal>
-
   </>
   )
 }
