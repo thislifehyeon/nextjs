@@ -16,14 +16,14 @@ function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts}) {
   const [editMode, setEditMode] = useState(false)
   const [workoutId, setWorkoutId] = useState(null);
   //드래그앤드롭으로 순서 바꾸기
-  const orderChangeHandler = async(routineId, workouts) => {
+  const orderChangeHandler = async(routineId, currentWorkouts) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine`
     const body = {
       routine_id :routineId,
-      exercise_array: workouts
+      exercise_array: currentWorkouts
     }
     const res = await axios.patch(url, body, {withCredentials: true})
-    console.log(res.data.exercise);
+    console.log(res.data);
   }
 
   const getListStyle = isDraggingOver => ({
