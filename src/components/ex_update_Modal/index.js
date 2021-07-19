@@ -46,7 +46,7 @@ function Modal({
     const res = await axios.patch(url, body, {withCredential: true})
     console.log(res);
     setModalOpen(!modalOpen)
-    setCurrentWorkouts([...currentWorkouts, res.data.result])
+    setCurrentWorkouts(res.data.result)
     console.log(currentWorkouts);
   };
 

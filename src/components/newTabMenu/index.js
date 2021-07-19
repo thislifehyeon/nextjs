@@ -38,7 +38,7 @@ function NewTabmenu({data, routineId, currentWorkouts, setCurrentWorkouts}) {
     }
     const res = await axios.post(url, body, { withCredentials: true })
     const data = res.data
-    setCurrentWorkouts([...currentWorkouts, data])
+    setCurrentWorkouts(data)
   };
 
   const newWorkoutHandler = (e) => {

@@ -13,6 +13,7 @@ resetServerContext();
 
 function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts}) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false)
   const [workoutId, setWorkoutId] = useState(null);
   //드래그앤드롭으로 순서 바꾸기
   const orderChangeHandler = async(routineId, workouts) => {
@@ -30,7 +31,6 @@ function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts}) {
     display: "flex",
   });
 
-  const [editMode, setEditMode] = useState(false)
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -61,6 +61,7 @@ function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts}) {
   const workoutDeleteHandler = async (e, id) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testexercise?workoutid=${id}`
     const res = await axios.delete(url, {withCredentials: true})
+    console.log(res);
     setCurrentWorkouts(res.data.result)
   }
 

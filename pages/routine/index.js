@@ -1,76 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-// import RoutineLists from './RoutineLists'
 import styled from 'styled-components';
 import axios from 'axios';
-import { currentRoutine } from '../../redux/reducers/routine';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { routineInfo } from '../../redux/reducers/routineInfo';
 
-function Routine({data}) {
-  const [routines, setRoutines] = useState(null);
+function Routine({ data }) {
+  const routines = data;
+  const userId = data.userid;
 
-  useEffect(() => {
-    getRoutine()
-  }, [])
-  
-  const getRoutine = async () => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-    const res = await axios.get(url, {withCredentials: true})
-    setRoutines(res.data)
-  }
-  
-  const addRoutine = () => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-    axios.post(url, null, { withCredentials: true })
-    .then((res) => {
-      getRoutine()
-    })
+  const addRoutine = async (userId) => {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_url}/testroutine`,
+      {
+        userid: userId,
+        routine_name: '새 루틴',
+        share: 'false',
+      },
+      { withCredentials: true }
+    );
   };
 
-  const deleteRoutine = (routineId) => {
+  const deleteRoutine = async (routineId) => {
     const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
-    axios.delete(url)
-    .then((res) => {
-      getRoutine()
-    })
+    const res = await axios.delete(url);
+    console.log(`${userId}의 루틴을 삭제했습니다`);
+    getRoutine(userId, routineId);
   };
-
 
   return (
     <>
       <RoutinePageHeader></RoutinePageHeader>
       <RoutineSection>
         {routines &&
-          routines.map((routine, idx) => (
+          routines.map((routine, index) => (
             <>
-              <Link key={idx} href={`/routine/${routine.id}`}>
-                  <RoutineContainer
-                    key={idx}
-                    id={idx}
-                  >
-                    <img key={idx} src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
-                    <RoutineItem key={idx} id={routine.id}>
-                      <RoutineTitle key={idx} id={routine.id}>{routine.name}</RoutineTitle>
-                    </RoutineItem>
-                  </RoutineContainer>
+              <Link href={`/routine/${routine.id}`}>
+                <RoutineContainer key={index}>
+                  <img src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
+                  <RoutineItem>
+                    <DeleteButton className='delete_btn' onClick={() => deleteRoutine(routineId)}>
+                      -
+                    </DeleteButton>
+                    <RoutineTitle>{routine.name}</RoutineTitle>
+                  </RoutineItem>
+                </RoutineContainer>
               </Link>
-              <DeleteButton 
-              key={idx}
-              id={routine.id} 
-              onClick={() => {
-                deleteRoutine(routine.id)
-              }}
-              >
-                -
-              </DeleteButton>
             </>
           ))}
         <AddRoutineButton
           onClick={() => {
-            addRoutine();
-            getRoutine();
+            addRoutine(userId);
           }}
         >
           +
@@ -82,17 +60,14 @@ function Routine({data}) {
 
 export default Routine;
 
-
-
 export async function getStaticProps(ctx) {
-  const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
-  const res = await axios.get(url, { withCredentials: true });
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_url}/testroutine`, { withCredentials: true });
   const data = res.data;
   return {
     props: {
-      data: data
-    }
-  }
+      data: data,
+    },
+  };
 }
 
 const RoutineSection = styled.section`
@@ -118,14 +93,12 @@ const AddRoutineButton = styled.button`
   background-color: #000036;
   color: #ffffff;
   font-size: 2rem;
-  position: fixed;
+  position: absolute;
   right: 2%;
   bottom: 5%;
-
   :hover {
-    /* transform: rotate(45deg); */
-    border: 3px #000036 solid;
-    box-shadow: 0 8px 8px 0 rgba(31, 38, 135, 0.37);
+    transform: rotate(45deg);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     font-size: 2.4rem;
     text-shadow: 1rem;
   }
@@ -137,7 +110,7 @@ const RoutinePageHeader = styled.div`
 
 const RoutineContainer = styled.ul`
   display: flex;
-  padding: 30px;
+  padding: 20px;
   flex-direction: row;
   /* margin-left: 40px; */
   justify-content: center;
@@ -146,15 +119,15 @@ const RoutineContainer = styled.ul`
   background: rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 5%;
-
+  margin: 30px;
+  cursor: pointer;
   img {
     height: 150px;
     width: 150px;
   }
-
-  :hover {
+  /* :hover {
     border: 7px solid #ffffff;
-  }
+  } */
 `;
 
 const RoutineItem = styled.div`
@@ -165,8 +138,13 @@ const RoutineItem = styled.div`
   font-size: 1rem;
   vertical-align: middle;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
+  .delete_btn {
+    position: absolute;
+    align-self: flex-end;
+    margin: 0px 0px 130px;
+  }
 `;
 
 const RoutineTitle = styled.h2`
@@ -186,12 +164,9 @@ const DeleteButton = styled.span`
   background-color: #b00000;
   text-align: center;
   margin-right: 10px;
-
   :hover {
     height: 22px;
     width: 22px;
     font-size: 1.3rem;
   }
 `;
-
-

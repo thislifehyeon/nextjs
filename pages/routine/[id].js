@@ -14,6 +14,7 @@ function New({data}) {
   const routineId = data[0].id
   const [currentWorkouts, setCurrentWorkouts] = useState(data[0].tasks)  
   console.log(currentWorkouts);
+
   return (
     <>
       <Container>
