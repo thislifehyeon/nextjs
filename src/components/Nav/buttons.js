@@ -4,11 +4,11 @@ export default function Buttons() {
       <ButtonContainer>
         {accessToken ? (
           <Link href='/Mypage'>
-            <div className='link mypage'>마이페이지</div>
+            <div className='link mypage'>My page</div>
           </Link>
         ) : (
           <div className='link login' onClick={() => setModalLogin(true)}>
-            로그인
+            Login
           </div>
         )}
         {accessToken ? (
@@ -20,11 +20,11 @@ export default function Buttons() {
               //로그아웃시 랜딩페이지로
             }}
           >
-            로그아웃
+            Logout
           </div>
         ) : (
           <div className='link signup' onClick={() => setModalSignup(true)}>
-            회원가입
+            Signup
           </div>
         )}
         {modalBuger ? <FontAwesomeIcon className='bars' icon={faTimes} onClick={() => setModalBuger(false)} /> : <FontAwesomeIcon className='bars' icon={faBars} onClick={() => setModalBuger(true)} />}

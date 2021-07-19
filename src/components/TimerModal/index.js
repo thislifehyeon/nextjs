@@ -182,6 +182,7 @@ function TimerModal({setTimerOpen, timerOpen, taskIds}) {
           {/* <div>{data ? data.name : ''}</div> */}
           <div>{isResting ? '휴식 시간' : taskIds[cur].name}</div>
           <div>{taskIds ? `${set} / ${taskIds[cur].set_number} 세트` : ""}</div>
+          <div>{taskIds[cur].memo}</div>
         </Info>
 
         <Time>

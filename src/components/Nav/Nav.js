@@ -28,16 +28,16 @@ export default function Nav() {
         <ButtonContainer>
           {accessToken ? (
             <>
-            <Link href='/Mypage'>
-              <div className='link mypage'>마이페이지</div>
-            </Link>
             <Link href='/routine'>
-              <div className='link main'>메인페이지</div>
+              <div className='link main'>시작하기</div>
+            </Link>
+            <Link href='/Mypage'>
+              <div className='link mypage'>My page</div>
             </Link>
             </>
           ) : (
             <div className='link login' onClick={() => setModalLogin(true)}>
-              로그인
+              Login
             </div>
           )}
           {accessToken ? (
@@ -49,11 +49,11 @@ export default function Nav() {
                 //로그아웃시 랜딩페이지로
               }}
             >
-              로그아웃
+              Logout
             </div>
           ) : (
             <div className='link signup' onClick={() => setModalSignup(true)}>
-              회원가입
+              Signup
             </div>
           )}
           {modalBuger ? (
@@ -70,11 +70,11 @@ export default function Nav() {
               {/* ---------------------------- */}
               {accessToken ? (
                 <Link href='/Mypage'>
-                  <div className='buger mypage'>마이페이지</div>
+                  <div className='buger mypage'>my page</div>
                 </Link>
               ) : (
                 <div className='buger signin' onClick={() => setModalLogin(true)}>
-                  로그인
+                  Login
                 </div>
               )}
 
@@ -92,11 +92,11 @@ export default function Nav() {
                     //로그아웃시 랜딩페이지로
                   }}
                 >
-                  로그아웃
+                  Logout
                 </div>
               ) : (
                 <div className='buger signup' onClick={() => setModalSignup(true)}>
-                  회원가입
+                  Signup
                 </div>
               )}
               {/* ---------------------------- */}

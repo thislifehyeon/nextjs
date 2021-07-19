@@ -81,6 +81,7 @@ function Modal({
           <div>운동이름</div>
           <input
             name='name'
+            defaultValue={"ㅋㅋㅋ"}
             onChange={(e) => {
               inputHandler(e);
             }}

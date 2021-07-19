@@ -66,7 +66,7 @@ function TodayRoutine({currentWorkouts, routineId, setCurrentWorkouts, timerOpen
   }
 
   const updateHandler = async (e) => {
-    console.log(e.target.id);
+    console.log(e);
     setModalOpen(!modalOpen)
     setWorkoutId(e.target.id)
   }
@@ -142,7 +142,6 @@ const handleFollow = () => {
                             <span>운동시간: {item.set_time_min}분 {item.set_time_sec}초</span>
                             <span>세트 간 휴식: {item.rest_time_min}분 {item.rest_time_sec}초</span>
                           </InfoContainer>
-                        <ItemMemo>{item.memo}</ItemMemo>
                       </Item>
                     </div>
                     )}
