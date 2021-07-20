@@ -193,7 +193,7 @@ const ItemContainer = styled.div`
   flex-direction: column;
   border-radius: 6px;
   overflow-y: scroll;
-  max-height: 70%;
+  max-height: 100%;
   width: 450px;
   background-color: ${(props) => (props.isDraggingOver ? 'lightblue' : '#4665d9')};
   background-color: ${(props) => (props.editMode ? '#000' : 'white')};
@@ -201,8 +201,8 @@ const ItemContainer = styled.div`
   opacity: ${(props) => (props.editMode ? '0.55' : '1')};
 
   @media (max-width: 1280px) {
-    max-width: 360px;
-    min-width: 280px;
+    max-width: 500px;
+    /* min-width: 280px; */
   }
 
   div {
@@ -226,6 +226,11 @@ const Item = styled.ul`
   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.22 );
   -webkit-backdrop-filter: blur(50px);
   backdrop-filter: blur(40px);
+
+  @media (max-width: 1280px) {
+    max-width: 450px;
+    /* min-width: 280px; */
+  }
 
   div {
     display: flex;
@@ -290,6 +295,18 @@ const ButtonContainer2 = styled.div`
   position: fixed; 
   right: 120px;
   bottom: 40px;
+
+  /* @media (max-width: 1280px) {
+    max-width: 100%;
+    height: 80%;
+    margin-top: 15px;
+    padding: 30px;
+  } */
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    position: static;
+  }
 `;
 
 const RotateButton = styled.div`
@@ -308,7 +325,7 @@ const RotateButton = styled.div`
   padding: 25px 0;
   cursor: pointer;
   
-  :hover {
+  &:hover {
     box-shadow: 3px 5px;
     background-color: #ff001d;
     opacity: 0.9;

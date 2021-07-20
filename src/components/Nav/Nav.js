@@ -110,6 +110,7 @@ export default function Nav() {
 
 const NavContainer = styled.div`
   display: flex;
+  opacity: 0.9;
   background-color: white;
   justify-content: space-between;
   position: fixed;

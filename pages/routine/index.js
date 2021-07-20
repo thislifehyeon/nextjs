@@ -2,28 +2,33 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 function Routine({ data }) {
-  const routines = data;
-  const userId = data.userid;
+  const router = useRouter();
+  const [routines, setRoutines] = useState(data);
 
-  const addRoutine = async (userId) => {
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_url}/testroutine`,
-      {
-        userid: userId,
-        routine_name: '새 루틴',
-        share: 'false',
-      },
-      { withCredentials: true }
-    );
+  useEffect(() => {
+    getRouitne();
+  }, []);
+
+  const getRouitne = async () => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
+    const res = await axios.get(url, { withCredentials: true });
+    setRoutines(res.data);
   };
 
-  const deleteRoutine = async (routineId) => {
-    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${routineId}`;
-    const res = await axios.delete(url);
-    console.log(`${userId}의 루틴을 삭제했습니다`);
-    getRoutine(userId, routineId);
+  const addRoutine = async () => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine`;
+    const res = await axios.post(url, null, { withCredentials: true });
+    console.log(res);
+    getRouitne();
+  };
+
+  const deleteRoutine = async (e) => {
+    const url = `${process.env.NEXT_PUBLIC_url}/testroutine?routine_id=${e.target.id}`;
+    await axios.delete(url);
+    getRouitne();
   };
 
   return (
@@ -33,22 +38,20 @@ function Routine({ data }) {
         {routines &&
           routines.map((routine, index) => (
             <>
-              <Link href={`/routine/${routine.id}`}>
-                <RoutineContainer key={index}>
-                  <img src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
-                  <RoutineItem>
-                    <DeleteButton className='delete_btn' onClick={() => deleteRoutine(routineId)}>
-                      -
-                    </DeleteButton>
-                    <RoutineTitle>{routine.name}</RoutineTitle>
-                  </RoutineItem>
-                </RoutineContainer>
-              </Link>
+              <RoutineContainer key={index}>
+                <img src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
+                <RoutineItem id={routine.id} onClick={() => router.push(`/routine/${routine.id}`)}>
+                  <RoutineTitle>{routine.name}</RoutineTitle>
+                </RoutineItem>
+                <DeleteButton id={routine.id} className='delete_btn' onClick={(e) => deleteRoutine(e)}>
+                  -
+                </DeleteButton>
+              </RoutineContainer>
             </>
           ))}
         <AddRoutineButton
           onClick={() => {
-            addRoutine(userId);
+            addRoutine();
           }}
         >
           +
@@ -96,6 +99,8 @@ const AddRoutineButton = styled.button`
   position: absolute;
   right: 2%;
   bottom: 5%;
+  cursor: pointer;
+
   :hover {
     transform: rotate(45deg);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);

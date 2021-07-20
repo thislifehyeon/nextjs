@@ -5,6 +5,8 @@ import {useRouter} from 'next/router';
 import Using from '../src/components/mainpage/UsingSection/Using';
 import Main from '../src/components/mainpage/MainSection/Main';
 import Footer from '../src/components/mainpage/Footer/Footer';
+import Sliding from '../src/components/mainpage/SlidingSection/SlidingSection';
+import Reactive from '../src/components/mainpage/ReactiveSection/Reactive';
 import Review from '../src/components/mainpage/ReviewSection/Review';
 import react, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -94,8 +96,9 @@ function App() {
           </ButtonWrapper>
         <Main/>
         <Using/>
+        <Sliding/>
         <Review/>
-        <ReactiveSection></ReactiveSection>
+        <Reactive></Reactive>
       </Container>
       <Footer/>
     </>

@@ -19,7 +19,8 @@ function New({data}) {
   return (
     <>
       <Container>
-        <ContainerTitle>나만의 루틴을 완성한 후 운동을 시작하세요</ContainerTitle>
+        <ContainerTitle>
+          <div>나만의 루틴을 완성한 후</div><div> 운동을 시작하세요</div></ContainerTitle>
         <SectionContainer>
           <FirstSection>
             <Tabmenu 
@@ -121,26 +122,66 @@ const Container = styled.div`
 
 const ContainerTitle = styled.div`
   text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
   font-size: 2.4rem;
   font-family: DoHyeon-Regular;
   margin: 120px 0 50px 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const SectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  @media (max-width: 1280px) {
+    /* flex-direction: column; */
+    /* max-width: 100%;
+    height: 80%;
+    margin-top: 15px;
+    padding: 30px; */
+  }
+
+  @media (max-width: 768px) {
+    /* max-width: 100%;
+    height: 80%;
+    margin-top: 15px;
+    padding: 30px; */
+  }
 `;
+
 const FirstSection = styled.div`
   height: 100%;
   width: 30%;
   display: flex;
   flex-direction: row;
+
+
+  @media (max-width: 1280px) {
+    display: none;
+    /* max-width: 100%;
+    height: 80%;
+    margin-top: 15px;
+    padding: 30px; */
+  }
 `;
 
 const SecondSection = styled.div`
   max-height: 85vh;
-  width:30%;
+  display: flex;
+  flex-direction: column;
+  /* width:30%; */
   /* background-color: pink; */
   border-radius: 30px;
+
+  @media (max-width: 1280px) {
+    max-width: 450px;
+    flex-direction: column-reverse;
+    /* min-width: 280px; */
+  }
 `;

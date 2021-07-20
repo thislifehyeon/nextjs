@@ -42,8 +42,12 @@ const ImageFinishLine = styled.img`
   margin-bottom: 30px;
   /* margin: 30px 0; */
   height: 500px;
-  width: 500px;
-  
+  width: 600px;
+
+  @media (max-width:768px) {
+    width: 80%;
+    height: auto;
+  }
 `;
 
 

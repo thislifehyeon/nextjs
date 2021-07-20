@@ -30,7 +30,7 @@ export default function login({ modalLogin, setModalLogin }) {
         .then((res) => {
           console.log('로그인 성공 : ', res.data.data);
             setModalLogin(false);
-            router.push('/');
+            router.push('/routine');
         })
         .catch((e) => console.log('로그인 실패', e));
     }
@@ -59,7 +59,7 @@ export default function login({ modalLogin, setModalLogin }) {
     <>
       <LoginContainer>
         <div className='login_form'>
-          <div>로그인</div>
+          {/* <div>로그인</div> */}
           <form className='login_input'>
             <span>아이디</span>
             <LoginInput name='email' onChange={(e) => inputHandler(e)} />
@@ -92,13 +92,15 @@ const LoginContainer = styled.div`
   flex-direction: column;
   padding-top: 200px;
   margin-top: 100px;
+  opacity: 0.9;
   z-index: 103;
   .login_form {
     position: absolute;
     display: flex;
     flex-direction: column;
     width: 22rem;
-    height: 30rem;
+    height: 24rem;
+    opacity: 1;
     border-radius: 5px;
     background-color: white;
     align-items: center;
@@ -136,10 +138,6 @@ const LoginInput = styled.input`
   height: 1.5rem;
   border-radius: 3px;
   border: 1px solid grey;
-  &:hover {
-    transform: translateX(-5px);
-    width: 100%;
-  }
 `;
 
 const LoginButton = styled.div`

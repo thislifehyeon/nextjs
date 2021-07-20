@@ -45,7 +45,6 @@ export default function SignUp() {
     <>
       <SignUpContainer>
         <div className='signup_form'>
-          <span>회원가입</span>
           <div className='signup_input'>
             <span>이름</span>
             <SignUpInput name='username' onChange={(e) => OnChange(e)} />
@@ -79,7 +78,7 @@ const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 22rem;
-    height: 30rem;
+    height: 34rem;
     border-radius: 5px;
     background-color: white;
     align-items: center;
