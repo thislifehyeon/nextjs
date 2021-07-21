@@ -40,12 +40,17 @@ function Routine({ data }) {
             <>
               <RoutineContainer key={index}>
                 <img src={`${process.env.NEXT_PUBLIC_url}/${routine.routineimage}`}></img>
-                <RoutineItem id={routine.id} onClick={() => router.push(`/routine/${routine.id}`)}>
+                <RoutineItem id={routine.id}>
                   <RoutineTitle>{routine.name}</RoutineTitle>
                 </RoutineItem>
-                <DeleteButton id={routine.id} className='delete_btn' onClick={(e) => deleteRoutine(e)}>
-                  -
-                </DeleteButton>
+                <ButtonContainer>
+                  <Button id={routine.id} className='delete_btn'  onClick={() => router.push(`/routine/${routine.id}`)}>
+                    선택
+                  </Button>
+                  <Button id={routine.id} className='delete_btn' onClick={(e) => deleteRoutine(e)}>
+                    삭제
+                  </Button>
+                </ButtonContainer>
               </RoutineContainer>
             </>
           ))}
@@ -96,7 +101,7 @@ const AddRoutineButton = styled.button`
   background-color: #000036;
   color: #ffffff;
   font-size: 2rem;
-  position: absolute;
+  position: fixed;
   right: 2%;
   bottom: 5%;
   cursor: pointer;
@@ -116,7 +121,7 @@ const RoutinePageHeader = styled.div`
 const RoutineContainer = styled.ul`
   display: flex;
   padding: 20px;
-  flex-direction: row;
+  flex-direction: column;
   /* margin-left: 40px; */
   justify-content: center;
   align-items: center;
@@ -157,21 +162,50 @@ const RoutineTitle = styled.h2`
   text-align: center;
 `;
 
-const DeleteButton = styled.span`
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
-  /* position: relative; */
-  width: 20px;
-  height: 20px;
+// const DeleteButton = styled.div`
+//   height: 30px;
+//   width: 30px;
+//   border-radius: 15px;
+//   /* position: relative; */
+//   width: 20px;
+//   height: 20px;
+//   color: #ffffff;
+//   cursor: pointer;
+//   background-color: #b00000;
+//   text-align: center;
+//   margin-right: 10px;
+//   :hover {
+//     height: 22px;
+//     width: 22px;
+//     font-size: 1.3rem;
+//   }
+// `;
+
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Button = styled.div`
+  width: 120px;
+  height: 45px;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 10px 0;
+  margin: 0 3px;
+  font-family: GmarketSansTTFBold;
+  background-color: #000035;
+  border: none;
   color: #ffffff;
   cursor: pointer;
-  background-color: #b00000;
-  text-align: center;
-  margin-right: 10px;
+
+
   :hover {
-    height: 22px;
-    width: 22px;
-    font-size: 1.3rem;
+    background-color:#d5d5d5;
+    color: #464646;
+    opacity: 0.7;
   }
 `;

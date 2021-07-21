@@ -118,7 +118,7 @@ const NavContainer = styled.div`
   width: 100%;
   z-index: 103;
   box-shadow: 0 0 3px 1px rgb(0 0 0 / 10%);
-  padding: 10px;
+  padding: 30px;
   .link {
     color: black;
     cursor: pointer;
@@ -126,7 +126,7 @@ const NavContainer = styled.div`
     padding: 10px 20px 10px 20px;
   }
   .link.logo {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
   .modal {
@@ -138,6 +138,7 @@ const NavContainer = styled.div`
   }
   .mypage,
   .login {
+    /* font-size: 1.4rem; */
     //로그인,마이페이지
   }
 `;

@@ -20,7 +20,10 @@ function New({data}) {
     <>
       <Container>
         <ContainerTitle>
-          <div>나만의 루틴을 완성한 후</div><div> 운동을 시작하세요</div></ContainerTitle>
+          <div>나만의 루틴을 완성한 후</div>
+          <span>&nbsp; </span>
+          <div>운동을 시작하세요</div>
+        </ContainerTitle>
         <SectionContainer>
           <FirstSection>
             <Tabmenu 
@@ -117,7 +120,7 @@ const Container = styled.div`
   justify-content: flex-start;
   /* padding-top: 5%; */
   height: 100vh;
-  width: 100vw;
+  width: 98vw;
 `;
 
 const ContainerTitle = styled.div`
@@ -131,6 +134,12 @@ const ContainerTitle = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+  }
+
+  span {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 `;
 

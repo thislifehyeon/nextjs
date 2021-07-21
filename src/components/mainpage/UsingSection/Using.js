@@ -73,7 +73,9 @@ const ImageContainer = styled.img`
 `;
 
 const Text = styled.div`
+  font-family: GmarketSansTTFLight;
   font-size: 1.1rem;
+  
   @media (max-width: 768px) {
     font-size: 0.8rem;
     line-height: 200%;

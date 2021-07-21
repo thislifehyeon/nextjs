@@ -21,10 +21,6 @@ const Container = styled.div`
   justify-content: space-evenly;
 `;
 
-const ReactiveSection = styled.div`
-  height: 80vh;
-  max-width: 100%;
-  `;
 
 const ButtonWrapper = styled.div`
   /* position: relative; */
@@ -98,7 +94,7 @@ function App() {
         <Using/>
         <Sliding/>
         <Review/>
-        <Reactive></Reactive>
+        {/* <Reactive></Reactive> */}
       </Container>
       <Footer/>
     </>

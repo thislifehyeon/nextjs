@@ -4,7 +4,7 @@ import { faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SlideSection = styled.div`
-  padding: 50px;
+  padding: 50px 0;
   height: 150vh;
   background-color: #f3f5f7;
   width: 100%;
@@ -14,17 +14,24 @@ const SlideSection = styled.div`
   align-items: center;
   overflow: hidden;
 
-  h2 {
-    font-family: ELAND-choice-L;
-    font-size: 3rem;
+  h1 {
+    font-family: GmarketSansTTFBold;
     text-align: center;
+   
+    @media (max-width: 768px) {
+    font-size: 2.4rem;
+    }
   }
 
-  div {
-    /* width: 80%; */
+  h4 {
+    font-family: GmarketSansTTFLight;
     text-align: center;
-    font-family: NEXONLv1GothicLight;
+    margin: 0;
+
+    @media (max-width: 768px) {
     font-size: 1.4rem;
+    padding: 0 20px;
+    }
   }
     
   @media (min-width:768px) and (max-width:1280px) { 
@@ -42,10 +49,7 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   width: 60%;
-
-  .bth {
-    font-size: 1.8rem;
-  }
+  font-size: 3.2rem;
 `;
 
 const SliderContainer = styled.div`
@@ -59,13 +63,10 @@ const SliderContainer = styled.div`
   margin-bottom: 20px;
 
   @media (min-width:768px) and (max-width:1280px) { 
-    /* box-sizing: auto; */
     width: 80%;
   }
   @media (max-width: 768px) {
-    /* height: 130vh; */
-    /* padding: 0; */
-    /* width: 150%; */
+    min-width: 100%;
   }
 `;
 
@@ -81,9 +82,8 @@ const Slide = styled.img`
     /* box-sizing: auto; */
   }
   @media (max-width: 768px) {
-    /* height: 130vh; */
-    /* padding: 0; */
-    /* width: 150%; */
+  margin-right: 118%;
+
   }
 `;
 
@@ -132,8 +132,8 @@ export default function Sliding() {
 
   return (
     <SlideSection>
-      <h2>{Title[currentSlide]}</h2>
-      <div>{contents[currentSlide]}</div>
+      <h1>{Title[currentSlide]}</h1>
+      <h4>{contents[currentSlide]}</h4>
       <SliderContainer ref={slideRef}>
         <Slide src="/slide/slide1.gif" />
         <Slide src="/slide/slide2.gif" />
@@ -143,10 +143,8 @@ export default function Sliding() {
       </SliderContainer>
       <ButtonContainer>
         <FontAwesomeIcon icon={faArrowAltCircleLeft} className='btn prev' onClick={prevSlide}>
-          <div>prev</div>
         </FontAwesomeIcon>
         <FontAwesomeIcon icon={faArrowAltCircleRight} className='btn next' onClick={nextSlide}>
-          <div>next</div>
         </FontAwesomeIcon>
       </ButtonContainer>
     </SlideSection>

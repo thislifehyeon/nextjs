@@ -44,10 +44,15 @@ export default function login({ modalLogin, setModalLogin }) {
         social: 'google',
         socialid: result.profileObj.googleId,
         profileimage: result.profileObj.imageUrl,
-      })
+      },
+      {
+        withCredentials : true
+      }
+      )
       .then((res) => {
         if (res.status === 200) {
           alert('로그인에 성공했습니다.');
+          setModalLogin(false);
         } else if (res.status === 201) {
           alert('회원가입에 성공했습니다.');
         }
