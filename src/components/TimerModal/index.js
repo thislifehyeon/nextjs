@@ -242,7 +242,7 @@ let Body = styled.div`
   }
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    width: 100%;
     height: 100%;
     margin-top: 15px;
     padding: 30px;

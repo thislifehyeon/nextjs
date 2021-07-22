@@ -45,6 +45,7 @@ export default function SignUp() {
     <>
       <SignUpContainer>
         <div className='signup_form'>
+          <div className='signup_title'>rouDDine</div>
           <div className='signup_input'>
             <span>이름</span>
             <SignUpInput name='username' onChange={(e) => OnChange(e)} />
@@ -68,21 +69,26 @@ export default function SignUp() {
 const SignUpContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top : 200px;
-  margin-top: 100px;
+  /* align-items: center; */
+  /* flex-direction: column; */
+  padding-top : 5%;
+  /* margin-top: 10%; */
   z-index: 103;
+  .signup_title {
+    padding: 20px;
+    font-size: 1.8rem;
+    font-family: ELAND-choice-B;
+  }
   .signup_form {
     position: static;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 22rem;
-    height: 34rem;
+    height: 30rem;
     border-radius: 5px;
     background-color: white;
     align-items: center;
-    justify-content: center;
     z-index: 100;
     > span {
       padding-top: 30px;
@@ -98,7 +104,7 @@ const SignUpContainer = styled.div`
     .signup_input {
       display: flex;
       flex-direction: column;
-      padding: 3rem 0rem 0rem 0rem;
+      /* padding: 3rem 0rem 0rem 0rem; */
       span {
         font-size: 0.8rem;
         color: grey;
@@ -122,6 +128,7 @@ const SignUpContainer = styled.div`
 
 const SignUpInput = styled.input`
   padding: 1rem;
+  margin-bottom: 5px;
   width: 14rem;
   height: 1.5rem;
   border-radius: 3px;

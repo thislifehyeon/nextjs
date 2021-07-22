@@ -7,6 +7,8 @@ import { useState } from 'react';
 import router from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+
 
 export default function Nav() {
   const accessToken = Cookies.get('accessToken');
@@ -45,6 +47,12 @@ export default function Nav() {
               className='link logout'
               onClick={() => {
                 Cookies.remove('accessToken');
+                axios
+                  .post(
+                    `${process.env.NEXT_PUBLIC_url}/logout`,
+                    null,
+                    { withCredentials: true }
+                  )
                 router.push('/');
                 //로그아웃시 랜딩페이지로
               }}
@@ -110,6 +118,7 @@ export default function Nav() {
 
 const NavContainer = styled.div`
   display: flex;
+  font-family: ELAND-choice-B;
   opacity: 0.9;
   background-color: white;
   justify-content: space-between;

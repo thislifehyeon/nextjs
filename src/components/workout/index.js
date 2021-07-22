@@ -182,7 +182,7 @@ const DndContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 90vh;
+  max-height: 100vh;
   @media (max-width: 1280px) {
     /* overflow-y: auto; */
   }
@@ -195,7 +195,8 @@ const ItemContainer = styled.div`
   overflow-y: scroll;
   max-height: 100%;
   width: 450px;
-  height: 90%;
+  min-height: 100%;
+  /* height: 100%; */
   background-color: ${(props) => (props.isDraggingOver ? 'lightblue' : '#4665d9')};
   background-color: ${(props) => (props.editMode ? '#000' : 'white')};
   border: ${(props) => (props.editMode ? '1px solid #000' : 'none')};

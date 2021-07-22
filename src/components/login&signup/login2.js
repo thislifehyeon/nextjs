@@ -28,7 +28,7 @@ export default function login2({ modalLogin2, setModalLogin2 }) {
         )
         .then((res) => {
           console.log('로그인 성공 : ', res.data.data);
-            setModalLogin2(!modalLogin2);
+            //setModalLogin2(!modalLogin2);
             setModalLogin(!modalLogin)
             router.push('/');
         })

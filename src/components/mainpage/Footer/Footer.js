@@ -72,6 +72,7 @@ const StartButton = styled.div`
   opacity: 0.7;
   border-radius: 10px;
   height: 50vh;
+  font-family: ELAND-choice-B;
   width: 98%;
   list-style: none;
   padding: 20px;

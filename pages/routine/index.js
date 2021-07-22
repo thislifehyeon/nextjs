@@ -107,8 +107,6 @@ const AddRoutineButton = styled.button`
   cursor: pointer;
 
   :hover {
-    transform: rotate(45deg);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     font-size: 2.4rem;
     text-shadow: 1rem;
   }

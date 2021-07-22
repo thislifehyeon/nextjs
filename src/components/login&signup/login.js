@@ -31,6 +31,7 @@ export default function login({ modalLogin, setModalLogin }) {
           console.log('로그인 성공 : ', res.data.data);
             setModalLogin(false);
             router.push('/routine');
+            document.cookie = 'accessToken=login;expires=12h;'
         })
         .catch((e) => console.log('로그인 실패', e));
     }
@@ -53,6 +54,7 @@ export default function login({ modalLogin, setModalLogin }) {
         if (res.status === 200) {
           alert('로그인에 성공했습니다.');
           setModalLogin(false);
+          document.cookie = 'accessToken=login;expires=12h;'
         } else if (res.status === 201) {
           alert('회원가입에 성공했습니다.');
         }
@@ -64,7 +66,7 @@ export default function login({ modalLogin, setModalLogin }) {
     <>
       <LoginContainer>
         <div className='login_form'>
-          {/* <div>로그인</div> */}
+          <div className='login_title'>rouDDine</div>
           <form className='login_input'>
             <span>아이디</span>
             <LoginInput name='email' onChange={(e) => inputHandler(e)} />
@@ -100,11 +102,13 @@ const LoginContainer = styled.div`
   opacity: 0.9;
   z-index: 103;
   .login_form {
+    font-family: ELAND-choice-B;
     position: absolute;
     display: flex;
     flex-direction: column;
     width: 22rem;
     height: 24rem;
+    padding: 25px;
     opacity: 1;
     border-radius: 5px;
     background-color: white;
@@ -112,16 +116,21 @@ const LoginContainer = styled.div`
     justify-content: center;
     z-index: 100;
     > div:nth-child(1) {
-      font-size: 1.5rem;
-      padding-bottom: 2rem;
+      font-size: 1.8rem;
+      font-family: ELAND-choice-B;
+      /* padding-bottom: 2rem; */
     }
     .login_input {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       padding: 1rem;
       span {
         font-size: 0.8rem;
         color: grey;
+      }
+      input {
+        margin-bottom: 10px;
       }
     }
     .login_button {
