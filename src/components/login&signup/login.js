@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import GoogleLogin from 'react-google-login';
 
-export default function login({ modalLogin, setModalLogin }) {
+export default function login({ setModalLogin }) {
   const router = useRouter();
   //input value 핸들링 state
   const [values, setValues] = useState({ email: '', password: '' });
@@ -27,11 +27,10 @@ export default function login({ modalLogin, setModalLogin }) {
           },
           { withCredentials: true }
         )
-        .then((res) => {
-          console.log('로그인 성공 : ', res.data.data);
-            setModalLogin(false);
-            router.push('/routine');
-            document.cookie = 'accessToken=login;expires=12h;'
+        .then(() => {
+          setModalLogin(false);
+          router.push('/routine');
+          
         })
         .catch((e) => console.log('로그인 실패', e));
     }
@@ -39,22 +38,23 @@ export default function login({ modalLogin, setModalLogin }) {
 
   const handlegoogleLogin = (result) => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_url}/login`, {
-        email: result.profileObj.email,
-        username: result.profileObj.name,
-        social: 'google',
-        socialid: result.profileObj.googleId,
-        profileimage: result.profileObj.imageUrl,
-      },
-      {
-        withCredentials : true
-      }
+      .post(
+        `${process.env.NEXT_PUBLIC_url}/login`,
+        {
+          email: result.profileObj.email,
+          username: result.profileObj.name,
+          social: 'google',
+          socialid: result.profileObj.googleId,
+          profileimage: result.profileObj.imageUrl,
+        },
+        {
+          withCredentials: true,
+        }
       )
       .then((res) => {
         if (res.status === 200) {
           alert('로그인에 성공했습니다.');
           setModalLogin(false);
-          document.cookie = 'accessToken=login;expires=12h;'
         } else if (res.status === 201) {
           alert('회원가입에 성공했습니다.');
         }
@@ -79,7 +79,6 @@ export default function login({ modalLogin, setModalLogin }) {
               로그인
             </LoginButton>
             <GoogleLogin
-              //  buttonText="GoogleLogin"
               clientId={`982420892016-vr0bn99ieuuaoucnhc5e2qiarg50mh2e.apps.googleusercontent.com`}
               onSuccess={(result) => handlegoogleLogin(result)}
               onFailure={(result) => console.log(result)}
@@ -99,7 +98,6 @@ const LoginContainer = styled.div`
   flex-direction: column;
   padding-top: 200px;
   margin-top: 100px;
-  opacity: 0.9;
   z-index: 103;
   .login_form {
     font-family: ELAND-choice-B;

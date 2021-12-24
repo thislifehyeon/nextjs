@@ -1,7 +1,6 @@
-import styled from 'styled-components';
-import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function login2({ modalLogin2, setModalLogin2 }) {
@@ -14,23 +13,22 @@ export default function login2({ modalLogin2, setModalLogin2 }) {
     const { value } = e.target;
     setValues(value);
   };
-  console.log(values);
 
   const loginHandler = (values) => {
-    if (values ) {
-      axios.post(
+    if (values) {
+      axios
+        .post(
           `${process.env.NEXT_PUBLIC_url}/tempuser`,
           {
             username: values,
-            social: "temp",
+            social: 'temp',
           },
           { withCredentials: true }
         )
-        .then((res) => {
-          console.log('로그인 성공 : ', res.data.data);
-            //setModalLogin2(!modalLogin2);
-            setModalLogin(!modalLogin)
-            router.push('/');
+        .then(() => {
+          setModalLogin(!modalLogin);
+          router.push('/');
+          
         })
         .catch((e) => console.log('로그인 실패', e));
     }
@@ -47,8 +45,7 @@ export default function login2({ modalLogin2, setModalLogin2 }) {
             <LoginInput onChange={(e) => inputHandler(e)} />
           </form>
           <div className='login_button'>
-            <LoginButton className='login_button button' 
-            onClick={() => loginHandler(values)}>
+            <LoginButton className='login_button button' onClick={() => loginHandler(values)}>
               로그인
             </LoginButton>
           </div>

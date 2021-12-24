@@ -16,6 +16,7 @@ export default function Buttons() {
             className='link logout'
             onClick={() => {
               Cookies.remove('accessToken');
+              Cookies.remove('refreshToken');
               router.push('/');
               //로그아웃시 랜딩페이지로
             }}

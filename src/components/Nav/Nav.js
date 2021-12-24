@@ -7,8 +7,6 @@ import { useState } from 'react';
 import router from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-
 
 export default function Nav() {
   const accessToken = Cookies.get('accessToken');
@@ -30,12 +28,12 @@ export default function Nav() {
         <ButtonContainer>
           {accessToken ? (
             <>
-            <Link href='/routine'>
-              <div className='link main'>시작하기</div>
-            </Link>
-            <Link href='/Mypage'>
-              <div className='link mypage'>My page</div>
-            </Link>
+              <Link href='/routine'>
+                <div className='link main'>시작하기</div>
+              </Link>
+              <Link href='/Mypage'>
+                <div className='link mypage'>My page</div>
+              </Link>
             </>
           ) : (
             <div className='link login' onClick={() => setModalLogin(true)}>
@@ -47,12 +45,7 @@ export default function Nav() {
               className='link logout'
               onClick={() => {
                 Cookies.remove('accessToken');
-                axios
-                  .post(
-                    `${process.env.NEXT_PUBLIC_url}/logout`,
-                    null,
-                    { withCredentials: true }
-                  )
+                Cookies.remove('refreshToken');
                 router.push('/');
                 //로그아웃시 랜딩페이지로
               }}
@@ -75,6 +68,8 @@ export default function Nav() {
           <BugerModal className={modalBuger ? 'active' : 'notActive'}>
             <div className='buger logo'>rouDDine</div>
             <div className='buger buttons'>
+              <div onClick={() => router.push(`/routine`)}>Main</div>
+
               {/* ---------------------------- */}
               {accessToken ? (
                 <Link href='/Mypage'>
@@ -87,7 +82,6 @@ export default function Nav() {
               )}
 
               {/* ---------버튼추가 이 아래로---------- */}
-              <div onClick={() => router.push(`/routine`)}>Main</div>
 
               {/* ---------버튼추가 이 위로------------ */}
 
@@ -119,15 +113,14 @@ export default function Nav() {
 const NavContainer = styled.div`
   display: flex;
   font-family: ELAND-choice-B;
-  opacity: 0.9;
-  background-color: white;
+  background: rgba(255, 255, 255, 0.9);
   justify-content: space-between;
   position: fixed;
   height: 8vh;
   width: 100%;
   z-index: 103;
   box-shadow: 0 0 3px 1px rgb(0 0 0 / 10%);
-  padding: 30px;
+  padding: 10px;
   .link {
     color: black;
     cursor: pointer;
@@ -135,7 +128,7 @@ const NavContainer = styled.div`
     padding: 10px 20px 10px 20px;
   }
   .link.logo {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
   .modal {
@@ -147,7 +140,6 @@ const NavContainer = styled.div`
   }
   .mypage,
   .login {
-    /* font-size: 1.4rem; */
     //로그인,마이페이지
   }
 `;
