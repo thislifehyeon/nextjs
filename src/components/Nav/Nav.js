@@ -10,6 +10,7 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function Nav() {
   const accessToken = Cookies.get('accessToken');
+  const LoginCookie = Cookies.get('LoginCookie')
   const [modalLogin, setModalLogin] = useState(false);
   const [modalSignup, setModalSignup] = useState(false);
   const [modalBuger, setModalBuger] = useState(false);
@@ -26,7 +27,7 @@ export default function Nav() {
         {modalSignup && <SignUp setModalSignup={setModalSignup} />}
 
         <ButtonContainer>
-          {accessToken ? (
+          {LoginCookie ? (
             <>
               <Link href='/routine'>
                 <div className='link main'>시작하기</div>
@@ -40,12 +41,13 @@ export default function Nav() {
               Login
             </div>
           )}
-          {accessToken ? (
+          {LoginCookie ? (
             <div
               className='link logout'
               onClick={() => {
                 Cookies.remove('accessToken');
                 Cookies.remove('refreshToken');
+                Cookies.remove('LoginCookie');
                 router.push('/');
                 //로그아웃시 랜딩페이지로
               }}
@@ -71,7 +73,7 @@ export default function Nav() {
               <div onClick={() => router.push(`/routine`)}>Main</div>
 
               {/* ---------------------------- */}
-              {accessToken ? (
+              {LoginCookie ? (
                 <Link href='/Mypage'>
                   <div className='buger mypage'>my page</div>
                 </Link>
@@ -85,11 +87,11 @@ export default function Nav() {
 
               {/* ---------버튼추가 이 위로------------ */}
 
-              {accessToken ? (
+              {LoginCookie ? (
                 <div
                   className='buger logout'
                   onClick={() => {
-                    Cookies.remove('accessToken');
+                    Cookies.remove('LoginCookie');
                     router.push('/');
                     //로그아웃시 랜딩페이지로
                   }}

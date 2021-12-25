@@ -1,8 +1,10 @@
+import Cookies from "js-cookie";
+
 export default function Buttons() {
   return (
     <>
       <ButtonContainer>
-        {accessToken ? (
+        {LoginCookie ? (
           <Link href='/Mypage'>
             <div className='link mypage'>My page</div>
           </Link>
@@ -11,12 +13,13 @@ export default function Buttons() {
             Login
           </div>
         )}
-        {accessToken ? (
+        {LoginCookie ? (
           <div
             className='link logout'
             onClick={() => {
               Cookies.remove('accessToken');
               Cookies.remove('refreshToken');
+              Cookies.remove('LoginCookie');
               router.push('/');
               //로그아웃시 랜딩페이지로
             }}

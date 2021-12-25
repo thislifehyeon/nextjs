@@ -30,7 +30,7 @@ export default function login({ setModalLogin }) {
         .then(() => {
           setModalLogin(false);
           router.push('/routine');
-          
+          document.cookie = 'LoginCookie=login;expires=12h;';
         })
         .catch((e) => console.log('로그인 실패', e));
     }

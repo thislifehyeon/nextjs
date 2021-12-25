@@ -28,7 +28,7 @@ export default function login2({ modalLogin2, setModalLogin2 }) {
         .then(() => {
           setModalLogin(!modalLogin);
           router.push('/');
-          
+          document.cookie = 'LoginCookie=login;expires=12h;';
         })
         .catch((e) => console.log('로그인 실패', e));
     }
